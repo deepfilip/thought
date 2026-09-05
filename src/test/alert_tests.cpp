@@ -6,6 +6,8 @@
 
 #include "alert.h"
 #include "chain.h"
+#include "base58.h"
+#include "key.h"
 #include "chainparams.h"
 #include "clientversion.h"
 #include "data/alertTests.raw.h"
@@ -17,6 +19,7 @@
 #include "test/test_thought.h"
 
 #include <fstream>
+#include <stdexcept>
 
 #include <boost/filesystem/operations.hpp>
 #include <boost/test/unit_test.hpp>
@@ -109,19 +112,75 @@ struct ReadAlerts : public TestingSetup
 {
     ReadAlerts()
     {
-        std::vector<unsigned char> vch(raw_tests::alertTests, raw_tests::alertTests + sizeof(raw_tests::alertTests));
-        CDataStream stream(vch, SER_DISK, CLIENT_VERSION);
-        try {
-            while (!stream.eof())
-            {
-                CAlert alert;
-                stream >> alert;
-                alerts.push_back(alert);
-            }
-        }
-        catch (const std::exception&) { }
+        CKey key;
+        key.MakeNewKey(true);
+        CThoughtSecret secret(key);
+        ForceSetArg("-alertkey", secret.ToString());
+
+        CPubKey pubkey = key.GetPubKey();
+        testAlertKey.assign(pubkey.begin(), pubkey.end());
+
+        auto addSigned = [this](CAlert& alert) {
+            if (!alert.Sign())
+                throw std::runtime_error("failed to sign test alert");
+            alerts.push_back(alert);
+        };
+
+        CAlert alert;
+        alert.nRelayUntil   = 60;
+        alert.nExpiration   = 24 * 60 * 60;
+        alert.nID           = 1;
+        alert.nCancel       = 0;
+        alert.nMinVer       = 0;
+        alert.nMaxVer       = 999001;
+        alert.nPriority     = 1;
+        alert.strComment    = "Alert comment";
+        alert.strStatusBar  = "Alert 1";
+        addSigned(alert);
+
+        alert.setSubVer.insert(std::string("/Satoshi:0.1.0/"));
+        alert.strStatusBar  = "Alert 1 for Satoshi 0.1.0";
+        addSigned(alert);
+
+        alert.setSubVer.insert(std::string("/Satoshi:0.2.0/"));
+        alert.strStatusBar  = "Alert 1 for Satoshi 0.1.0, 0.2.0";
+        addSigned(alert);
+
+        alert.setSubVer.clear();
+        ++alert.nID;
+        alert.nCancel = 1;
+        alert.nPriority = 100;
+        alert.strStatusBar  = "Alert 2, cancels 1";
+        addSigned(alert);
+
+        alert.nExpiration += 60;
+        ++alert.nID;
+        addSigned(alert);
+
+        ++alert.nID;
+        alert.nMinVer = 11;
+        alert.nMaxVer = 22;
+        addSigned(alert);
+
+        ++alert.nID;
+        alert.strStatusBar  = "Alert 2 for Satoshi 0.1.0";
+        alert.setSubVer.insert(std::string("/Satoshi:0.1.0/"));
+        addSigned(alert);
+
+        ++alert.nID;
+        alert.nMinVer = 0;
+        alert.nMaxVer = 999999;
+        alert.strStatusBar  = "Evil Alert'; /bin/ls; echo '";
+        alert.setSubVer.clear();
+        addSigned(alert);
+
+        ForceRemoveArg("-alertkey");
     }
-    ~ReadAlerts() { }
+
+    ~ReadAlerts()
+    {
+        ForceRemoveArg("-alertkey");
+    }
 
     static std::vector<std::string> read_lines(boost::filesystem::path filepath)
     {
@@ -136,6 +195,7 @@ struct ReadAlerts : public TestingSetup
     }
 
     std::vector<CAlert> alerts;
+    std::vector<unsigned char> testAlertKey;
 };
 
 BOOST_FIXTURE_TEST_SUITE(Alert_tests, ReadAlerts)
@@ -159,12 +219,18 @@ BOOST_AUTO_TEST_CASE(GenerateAlerts)
 BOOST_AUTO_TEST_CASE(AlertApplies)
 {
     SetMockTime(11);
-    const std::vector<unsigned char>& alertKey = Params(CBaseChainParams::MAIN).AlertKey();
+    const std::vector<unsigned char>& alertKey = testAlertKey;
 
     for (const auto& alert : alerts)
     {
         BOOST_CHECK(alert.CheckSignature(alertKey));
     }
+
+    BOOST_REQUIRE(!alerts.empty());
+    CAlert tampered = alerts[0];
+    BOOST_REQUIRE(!tampered.vchSig.empty());
+    tampered.vchSig[0] ^= 0x01;
+    BOOST_CHECK(!tampered.CheckSignature(alertKey));
 
     BOOST_CHECK(alerts.size() >= 3);
 
@@ -200,7 +266,7 @@ BOOST_AUTO_TEST_CASE(AlertApplies)
 BOOST_AUTO_TEST_CASE(AlertNotify)
 {
     SetMockTime(11);
-    const std::vector<unsigned char>& alertKey = Params(CBaseChainParams::MAIN).AlertKey();
+    const std::vector<unsigned char>& alertKey = testAlertKey;
 
     boost::filesystem::path temp = GetTempPath() /
         boost::filesystem::unique_path("alertnotify-%%%%.txt");

@@ -89,7 +89,11 @@ bool PaymentRequestPlus::getMerchant(X509_STORE* certStore, QString& merchant) c
     }
 
     std::vector<X509*> certs;
-    const QDateTime currentTime = QDateTime::currentDateTime();
+    #if QT_VERSION >= QT_VERSION_CHECK(5, 8, 0)
+    const QDateTime currentTime = QDateTime::fromSecsSinceEpoch(GetTime());
+#else
+    const QDateTime currentTime = QDateTime::fromTime_t((uint)GetTime());
+#endif
     for (int i = 0; i < certChain.certificate_size(); i++) {
         QByteArray certData(certChain.certificate(i).data(), certChain.certificate(i).size());
         QSslCertificate qCert(certData, QSsl::Der);
@@ -138,6 +142,9 @@ bool PaymentRequestPlus::getMerchant(X509_STORE* certStore, QString& merchant) c
             int error = X509_STORE_CTX_get_error(store_ctx);
             throw SSLVerifyError(X509_verify_cert_error_string(error));
         }
+
+        // Use the same clock as the explicit Qt certificate-date check.
+        X509_STORE_CTX_set_time(store_ctx, 0, GetTime());
 
         // Now do the verification!
         int result = X509_verify_cert(store_ctx);

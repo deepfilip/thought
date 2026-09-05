@@ -216,15 +216,16 @@ class MasternodeInfo:
 
 
 class ThoughtTestFramework(ThoughtTestFramework):
-    def __init__(self, num_nodes, masterodes_count, extra_args):
+    def __init__(self, num_nodes=None, masterodes_count=0, extra_args=None):
         super().__init__()
         self.mn_count = masterodes_count
-        self.num_nodes = num_nodes
         self.mninfo = []
-        self.setup_clean_chain = True
+        if num_nodes is not None:
+            self.num_nodes = num_nodes
+            self.setup_clean_chain = True
         self.is_network_split = False
-        # additional args
-        self.extra_args = extra_args
+        # Preserve the legacy no-argument constructor while avoiding a mutable default.
+        self.extra_args = [] if extra_args is None else extra_args
 
     def create_simple_node(self):
         idx = len(self.nodes)

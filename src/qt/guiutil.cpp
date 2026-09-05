@@ -228,7 +228,7 @@ bool parseThoughtURI(QString uri, SendCoinsRecipient *out)
     //    which will lower-case it (and thus invalidate the address).
     if(uri.startsWith("thought://", Qt::CaseInsensitive))
     {
-        uri.replace(0, 7, "thought:");
+        uri.replace(0, 10, "thought:");
     }
     QUrl uriInstance(uri);
     return parseThoughtURI(uriInstance, out);

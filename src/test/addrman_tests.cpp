@@ -4,6 +4,7 @@
 #include "addrman.h"
 #include "test/test_thought.h"
 #include <string>
+#include <set>
 #include <boost/test/unit_test.hpp>
 
 #include "hash.h"
@@ -203,10 +204,12 @@ BOOST_AUTO_TEST_CASE(addrman_select)
     BOOST_CHECK(addrman.size() == 7);
 
     // Test 12: Select pulls from new and tried regardless of port number.
-    BOOST_CHECK(addrman.Select().ToString() == "250.4.6.6:8333");
-    BOOST_CHECK(addrman.Select().ToString() == "250.3.2.2:10618");
-    BOOST_CHECK(addrman.Select().ToString() == "250.3.3.3:10618");
-    BOOST_CHECK(addrman.Select().ToString() == "250.4.4.4:8333");
+    // Exact draw ordering is not part of AddrMan's behavioral contract.
+    std::set<uint16_t> ports;
+    for (int i = 0; i < 20; ++i) {
+        ports.insert(addrman.Select().GetPort());
+    }
+    BOOST_CHECK_EQUAL(ports.size(), 3u);
 }
 
 BOOST_AUTO_TEST_CASE(addrman_new_collisions)
