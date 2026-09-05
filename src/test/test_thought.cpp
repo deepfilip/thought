@@ -11,6 +11,7 @@
 #include "consensus/validation.h"
 #include "key.h"
 #include "validation.h"
+#include "versionbits.h"
 #include "miner.h"
 #include "net_processing.h"
 #include "pubkey.h"
@@ -150,6 +151,11 @@ CBlock TestChainSetup::CreateBlock(const std::vector<CMutableTransaction>& txns,
     const CChainParams& chainparams = Params();
     std::unique_ptr<CBlockTemplate> pblocktemplate = BlockAssembler(chainparams).CreateNewBlock(scriptPubKey);
     CBlock& block = pblocktemplate->block;
+
+    // Thought's versionbits condition requires the explicit bit-27 voting flag.
+    // Keep ComputeBlockVersion authoritative for deployment bits, but ensure
+    // TestChainSetup-generated blocks actually vote when those bits are set.
+    block.nVersion |= VERSIONBITS_VOTING_BIT;
 
     std::vector<CTransactionRef> llmqCommitments;
     for (const auto& tx : block.vtx) {

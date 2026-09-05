@@ -25,6 +25,8 @@ static const std::string payoutKey          ("cV3qrPWzDcnhzRMV4MqtTH4LhNPqPo26Zn
 
 typedef std::map<COutPoint, std::pair<int, CAmount>> SimpleUTXOMap;
 
+static const CAmount PROTX_COLLATERAL = 314000 * COIN;
+
 static SimpleUTXOMap BuildSimpleUtxoMap(const std::vector<CTransaction>& txs)
 {
     SimpleUTXOMap utxos;
@@ -94,13 +96,34 @@ static void SignTransaction(CMutableTransaction& tx, const CKey& coinbaseKey)
     }
 }
 
-static CMutableTransaction CreateProRegTx(SimpleUTXOMap& utxos, int port, const CScript& scriptPayout, const CKey& coinbaseKey, CKey& ownerKeyRet, CBLSSecretKey& operatorKeyRet)
+static CMutableTransaction CreateProRegFundingTx(SimpleUTXOMap& utxos, size_t count, const CKey& coinbaseKey)
+{
+    BOOST_ASSERT(count > 0);
+
+    CAmount change;
+    auto inputs = SelectUTXOs(utxos, PROTX_COLLATERAL * count, change);
+
+    CMutableTransaction tx;
+    for (const auto& input : inputs) {
+        tx.vin.emplace_back(CTxIn(input));
+    }
+
+    CScript scriptPubKey = CScript() << ToByteVector(coinbaseKey.GetPubKey()) << OP_CHECKSIG;
+    for (size_t i = 0; i < count; i++) {
+        tx.vout.emplace_back(CTxOut(PROTX_COLLATERAL, scriptPubKey));
+    }
+    if (change != 0) {
+        tx.vout.emplace_back(CTxOut(change, scriptPubKey));
+    }
+
+    SignTransaction(tx, coinbaseKey);
+    return tx;
+}
+
+static CMutableTransaction CreateProRegTx(SimpleUTXOMap& utxos, int port, const CScript& scriptPayout, const CKey& coinbaseKey, CKey& ownerKeyRet, CBLSSecretKey& operatorKeyRet, const COutPoint* fundingOutpoint = nullptr)
 {
     ownerKeyRet.MakeNewKey(true);
     operatorKeyRet.MakeNewKey();
-
-    CAmount change;
-    auto inputs = SelectUTXOs(utxos, 1000 * COIN, change);
 
     CProRegTx proTx;
     proTx.collateralOutpoint.n = 0;
@@ -113,7 +136,14 @@ static CMutableTransaction CreateProRegTx(SimpleUTXOMap& utxos, int port, const 
     CMutableTransaction tx;
     tx.nVersion = 3;
     tx.nType = TRANSACTION_PROVIDER_REGISTER;
-    FundTransaction(tx, utxos, scriptPayout, 1000 * COIN, coinbaseKey);
+
+    if (fundingOutpoint != nullptr) {
+        tx.vin.emplace_back(CTxIn(*fundingOutpoint));
+        tx.vout.emplace_back(CTxOut(PROTX_COLLATERAL, scriptPayout));
+    } else {
+        FundTransaction(tx, utxos, scriptPayout, PROTX_COLLATERAL, coinbaseKey);
+    }
+
     proTx.inputsHash = CalcTxInputsHash(tx);
     SetTxPayload(tx, proTx);
     SignTransaction(tx, coinbaseKey);
@@ -255,6 +285,20 @@ BOOST_FIXTURE_TEST_CASE(dip3_protx, TestChainDIP3Setup)
 
     auto utxos = BuildSimpleUtxoMap(coinbaseTxns);
 
+    // 6 individual registrations + 3 batches of 3 = 15 total.
+    // Mine one normal funding split so every ProReg consumes an independent,
+    // non-coinbase 314000-COIN output.
+    static const size_t PROTX_REGISTRATION_COUNT = 15;
+    CMutableTransaction proRegFundingTx = CreateProRegFundingTx(utxos, PROTX_REGISTRATION_COUNT, coinbaseKey);
+    CreateAndProcessBlock({proRegFundingTx}, coinbaseKey);
+    deterministicMNManager->UpdatedBlockTip(chainActive.Tip());
+
+    std::vector<COutPoint> proRegFunding;
+    for (size_t i = 0; i < PROTX_REGISTRATION_COUNT; i++) {
+        proRegFunding.emplace_back(proRegFundingTx.GetHash(), i);
+    }
+    size_t proRegFundingIndex = 0;
+
     int nHeight = chainActive.Height();
     int port = 1;
 
@@ -266,7 +310,8 @@ BOOST_FIXTURE_TEST_CASE(dip3_protx, TestChainDIP3Setup)
     for (size_t i = 0; i < 6; i++) {
         CKey ownerKey;
         CBLSSecretKey operatorKey;
-        auto tx = CreateProRegTx(utxos, port++, GenerateRandomAddress(), coinbaseKey, ownerKey, operatorKey);
+        BOOST_REQUIRE(proRegFundingIndex < proRegFunding.size());
+        auto tx = CreateProRegTx(utxos, port++, GenerateRandomAddress(), coinbaseKey, ownerKey, operatorKey, &proRegFunding[proRegFundingIndex++]);
         dmnHashes.emplace_back(tx.GetHash());
         ownerKeys.emplace(tx.GetHash(), ownerKey);
         operatorKeys.emplace(tx.GetHash(), operatorKey);
@@ -306,7 +351,8 @@ BOOST_FIXTURE_TEST_CASE(dip3_protx, TestChainDIP3Setup)
         for (size_t j = 0; j < 3; j++) {
             CKey ownerKey;
             CBLSSecretKey operatorKey;
-            auto tx = CreateProRegTx(utxos, port++, GenerateRandomAddress(), coinbaseKey, ownerKey, operatorKey);
+            BOOST_REQUIRE(proRegFundingIndex < proRegFunding.size());
+            auto tx = CreateProRegTx(utxos, port++, GenerateRandomAddress(), coinbaseKey, ownerKey, operatorKey, &proRegFunding[proRegFundingIndex++]);
             dmnHashes.emplace_back(tx.GetHash());
             ownerKeys.emplace(tx.GetHash(), ownerKey);
             operatorKeys.emplace(tx.GetHash(), operatorKey);
@@ -322,6 +368,8 @@ BOOST_FIXTURE_TEST_CASE(dip3_protx, TestChainDIP3Setup)
 
         nHeight++;
     }
+
+    BOOST_CHECK_EQUAL(proRegFundingIndex, PROTX_REGISTRATION_COUNT);
 
     // test ProUpServTx
     auto tx = CreateProUpServTx(utxos, dmnHashes[0], operatorKeys[dmnHashes[0]], 1000, CScript(), coinbaseKey);

@@ -5,12 +5,14 @@
 #include <boost/test/unit_test.hpp>
 
 #include "base58.h"
+#include "hash.h"
 #include "key.h"
 #include "uint256.h"
 #include "util.h"
 #include "utilstrencodings.h"
 #include "test/test_thought.h"
 
+#include <cstring>
 #include <string>
 #include <vector>
 
@@ -78,32 +80,75 @@ TestVector test2 =
      "xprvA2nrNbFZABcdryreWet9Ea4LvTJcGsqrMzxHx98MMrotbir7yrKCEXw7nadnHM8Dq38EGfSh6dqA9QWTyefMLEcBYJUuekgW4BYPJcr9E7j",
      0);
 
+static std::vector<unsigned char> DecodeCheckedBase58(const std::string& encoded)
+{
+    std::vector<unsigned char> decoded;
+    BOOST_REQUIRE_MESSAGE(DecodeBase58(encoded, decoded), "invalid Base58 reference vector: " << encoded);
+    BOOST_REQUIRE_MESSAGE(decoded.size() >= 4, "Base58Check reference vector too short: " << encoded);
+    uint256 checksum = Hash(decoded.begin(), decoded.end() - 4);
+    BOOST_REQUIRE_MESSAGE(std::memcmp(&checksum, &decoded.end()[-4], 4) == 0,
+                          "Base58Check checksum mismatch: " << encoded);
+    decoded.resize(decoded.size() - 4);
+    return decoded;
+}
+
+static void CheckExtKeyEncoding(const std::string& reference,
+                                const std::vector<unsigned char>& referenceVersion,
+                                const std::vector<unsigned char>& thoughtVersion,
+                                const unsigned char encoded[BIP32_EXTKEY_SIZE],
+                                const std::string& thoughtString)
+{
+    std::vector<unsigned char> referenceDecoded;
+    referenceDecoded = DecodeCheckedBase58(reference);
+    BOOST_REQUIRE_EQUAL(referenceVersion.size(), 4U);
+    BOOST_REQUIRE_EQUAL(thoughtVersion.size(), 4U);
+    BOOST_REQUIRE_EQUAL(referenceDecoded.size(), referenceVersion.size() + BIP32_EXTKEY_SIZE);
+    BOOST_CHECK_EQUAL_COLLECTIONS(referenceDecoded.begin(), referenceDecoded.begin() + referenceVersion.size(),
+                                  referenceVersion.begin(), referenceVersion.end());
+    BOOST_CHECK_EQUAL_COLLECTIONS(referenceDecoded.begin() + referenceVersion.size(), referenceDecoded.end(),
+                                  encoded, encoded + BIP32_EXTKEY_SIZE);
+
+    std::vector<unsigned char> thoughtDecoded;
+    thoughtDecoded = DecodeCheckedBase58(thoughtString);
+    BOOST_REQUIRE_EQUAL(thoughtDecoded.size(), thoughtVersion.size() + BIP32_EXTKEY_SIZE);
+    BOOST_CHECK_EQUAL_COLLECTIONS(thoughtDecoded.begin(), thoughtDecoded.begin() + thoughtVersion.size(),
+                                  thoughtVersion.begin(), thoughtVersion.end());
+    BOOST_CHECK_EQUAL_COLLECTIONS(thoughtDecoded.begin() + thoughtVersion.size(), thoughtDecoded.end(),
+                                  encoded, encoded + BIP32_EXTKEY_SIZE);
+}
+
 void RunTest(const TestVector &test) {
+    static const std::vector<unsigned char> bitcoinExtPublic = {0x04, 0x88, 0xB2, 0x1E};
+    static const std::vector<unsigned char> bitcoinExtSecret = {0x04, 0x88, 0xAD, 0xE4};
+
     std::vector<unsigned char> seed = ParseHex(test.strHexMaster);
     CExtKey key;
     CExtPubKey pubkey;
     key.SetMaster(&seed[0], seed.size());
     pubkey = key.Neuter();
     BOOST_FOREACH(const TestDerivation &derive, test.vDerive) {
-        unsigned char data[74];
-        key.Encode(data);
-        pubkey.Encode(data);
+        unsigned char privateData[BIP32_EXTKEY_SIZE];
+        unsigned char publicData[BIP32_EXTKEY_SIZE];
+        key.Encode(privateData);
+        pubkey.Encode(publicData);
 
-        // Test private key
-        CThoughtExtKey b58key; b58key.SetKey(key);
-        BOOST_CHECK(b58key.ToString() == derive.prv);
+        // Keep the standard Bitcoin BIP32 vectors as derivation/payload references,
+        // while validating Thought's network-specific extended-key presentation separately.
+        CThoughtExtKey b58key;
+        b58key.SetKey(key);
+        CheckExtKeyEncoding(derive.prv, bitcoinExtSecret,
+                            Params().Base58Prefix(CChainParams::EXT_SECRET_KEY),
+                            privateData, b58key.ToString());
+        CThoughtExtKey b58keyDecodeCheck(b58key.ToString());
+        BOOST_CHECK(b58keyDecodeCheck.GetKey() == key);
 
-        CThoughtExtKey b58keyDecodeCheck(derive.prv);
-        CExtKey checkKey = b58keyDecodeCheck.GetKey();
-        assert(checkKey == key); //ensure a base58 decoded key also matches
-
-        // Test public key
-        CThoughtExtPubKey b58pubkey; b58pubkey.SetKey(pubkey);
-        BOOST_CHECK(b58pubkey.ToString() == derive.pub);
-
-        CThoughtExtPubKey b58PubkeyDecodeCheck(derive.pub);
-        CExtPubKey checkPubKey = b58PubkeyDecodeCheck.GetKey();
-        assert(checkPubKey == pubkey); //ensure a base58 decoded pubkey also matches
+        CThoughtExtPubKey b58pubkey;
+        b58pubkey.SetKey(pubkey);
+        CheckExtKeyEncoding(derive.pub, bitcoinExtPublic,
+                            Params().Base58Prefix(CChainParams::EXT_PUBLIC_KEY),
+                            publicData, b58pubkey.ToString());
+        CThoughtExtPubKey b58PubkeyDecodeCheck(b58pubkey.ToString());
+        BOOST_CHECK(b58PubkeyDecodeCheck.GetKey() == pubkey);
 
         // Derive new keys
         CExtKey keyNew;

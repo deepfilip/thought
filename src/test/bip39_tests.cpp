@@ -3,6 +3,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "base58.h"
+#include "hash.h"
 #include "data/bip39_vectors.json.h"
 #include "key.h"
 #include "util.h"
@@ -12,12 +13,57 @@
 
 #include <boost/test/unit_test.hpp>
 
+#include <cstring>
+
 #include <univalue.h>
 
 // In script_tests.cpp
 extern UniValue read_json(const std::string& jsondata);
 
 BOOST_FIXTURE_TEST_SUITE(bip39_tests, BasicTestingSetup)
+
+static std::vector<unsigned char> DecodeCheckedBase58(const std::string& encoded)
+{
+    std::vector<unsigned char> decoded;
+    BOOST_REQUIRE_MESSAGE(DecodeBase58(encoded, decoded), "invalid Base58 reference vector: " << encoded);
+    BOOST_REQUIRE_MESSAGE(decoded.size() >= 4, "Base58Check reference vector too short: " << encoded);
+    uint256 checksum = Hash(decoded.begin(), decoded.end() - 4);
+    BOOST_REQUIRE_MESSAGE(std::memcmp(&checksum, &decoded.end()[-4], 4) == 0,
+                          "Base58Check checksum mismatch: " << encoded);
+    decoded.resize(decoded.size() - 4);
+    return decoded;
+}
+
+static void CheckBip39ExtendedPrivateKey(const std::string& reference, const CExtKey& key)
+{
+    static const std::vector<unsigned char> bitcoinExtSecret = {0x04, 0x88, 0xAD, 0xE4};
+    const std::vector<unsigned char>& thoughtExtSecret = Params().Base58Prefix(CChainParams::EXT_SECRET_KEY);
+    unsigned char encoded[BIP32_EXTKEY_SIZE];
+    key.Encode(encoded);
+
+    std::vector<unsigned char> referenceDecoded;
+    referenceDecoded = DecodeCheckedBase58(reference);
+    BOOST_REQUIRE_EQUAL(bitcoinExtSecret.size(), 4U);
+    BOOST_REQUIRE_EQUAL(thoughtExtSecret.size(), 4U);
+    BOOST_REQUIRE_EQUAL(referenceDecoded.size(), bitcoinExtSecret.size() + BIP32_EXTKEY_SIZE);
+    BOOST_CHECK_EQUAL_COLLECTIONS(referenceDecoded.begin(), referenceDecoded.begin() + bitcoinExtSecret.size(),
+                                  bitcoinExtSecret.begin(), bitcoinExtSecret.end());
+    BOOST_CHECK_EQUAL_COLLECTIONS(referenceDecoded.begin() + bitcoinExtSecret.size(), referenceDecoded.end(),
+                                  encoded, encoded + BIP32_EXTKEY_SIZE);
+
+    CThoughtExtKey thoughtKey;
+    thoughtKey.SetKey(key);
+    std::vector<unsigned char> thoughtDecoded;
+    thoughtDecoded = DecodeCheckedBase58(thoughtKey.ToString());
+    BOOST_REQUIRE_EQUAL(thoughtDecoded.size(), thoughtExtSecret.size() + BIP32_EXTKEY_SIZE);
+    BOOST_CHECK_EQUAL_COLLECTIONS(thoughtDecoded.begin(), thoughtDecoded.begin() + thoughtExtSecret.size(),
+                                  thoughtExtSecret.begin(), thoughtExtSecret.end());
+    BOOST_CHECK_EQUAL_COLLECTIONS(thoughtDecoded.begin() + thoughtExtSecret.size(), thoughtDecoded.end(),
+                                  encoded, encoded + BIP32_EXTKEY_SIZE);
+
+    CThoughtExtKey roundTrip(thoughtKey.ToString());
+    BOOST_CHECK(roundTrip.GetKey() == key);
+}
 
 // https://github.com/trezor/python-mnemonic/blob/b502451a33a440783926e04428115e0bed87d01f/vectors.json
 BOOST_AUTO_TEST_CASE(bip39_vectors)
@@ -52,15 +98,11 @@ BOOST_AUTO_TEST_CASE(bip39_vectors)
         BOOST_CHECK(HexStr(seed) == test[2].get_str());
 
         CExtKey key;
-        CExtPubKey pubkey;
-
         key.SetMaster(&seed[0], 64);
-        pubkey = key.Neuter();
 
-        CThoughtExtKey b58key;
-        b58key.SetKey(key);
-        // printf("CThoughtExtKey: %s\n", b58key.ToString().c_str());
-        BOOST_CHECK(b58key.ToString() == test[3].get_str());
+        // Keep the Trezor/Bitcoin xprv as a reference for the 74-byte master-key payload,
+        // and validate Thought's network-specific extended-secret presentation separately.
+        CheckBip39ExtendedPrivateKey(test[3].get_str(), key);
     }
 }
 
