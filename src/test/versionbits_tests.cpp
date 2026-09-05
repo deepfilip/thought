@@ -210,10 +210,13 @@ BOOST_AUTO_TEST_CASE(versionbits_test)
 
     // Sanity checks of version bit deployments
     const Consensus::Params &mainnetParams = Params(CBaseChainParams::MAIN).GetConsensus();
+    const uint32_t testDummyMask = VersionBitsMask(mainnetParams, Consensus::DEPLOYMENT_TESTDUMMY);
+    const uint32_t thoughtReservedEncodingMask = (uint32_t)VERSIONBITS_TOP_MASK & ~testDummyMask;
     for (int i=0; i<(int) Consensus::MAX_VERSION_BITS_DEPLOYMENTS; i++) {
         uint32_t bitmask = VersionBitsMask(mainnetParams, (Consensus::DeploymentPos)i);
         // Make sure that no deployment tries to set an invalid bit.
-        BOOST_CHECK_EQUAL(bitmask & ~(uint32_t)VERSIONBITS_TOP_MASK, bitmask);
+        BOOST_CHECK_EQUAL(bitmask & thoughtReservedEncodingMask, 0U);
+        BOOST_CHECK_EQUAL(bitmask & (uint32_t)VERSIONBITS_VOTING_BIT, 0U);
 
         // Verify that the deployment windows of different deployment using the
         // same bit are disjoint.
@@ -278,7 +281,7 @@ BOOST_AUTO_TEST_CASE(versionbits_computeblockversion)
     // so ComputeBlockVersion should now set the bit,
     BOOST_CHECK((ComputeBlockVersion(lastBlock, mainnetParams) & (1<<bit)) != 0);
     // and should also be using the VERSIONBITS_TOP_BITS.
-    BOOST_CHECK_EQUAL(ComputeBlockVersion(lastBlock, mainnetParams) & VERSIONBITS_TOP_MASK, VERSIONBITS_TOP_BITS);
+    BOOST_CHECK_EQUAL(ComputeBlockVersion(lastBlock, mainnetParams) & VERSIONBITS_TOP_MASK, VERSIONBITS_SHA_TOP_BITS | (1<<bit));
 
     // Check that ComputeBlockVersion will set the bit until nTimeout
     nTime += 600;
@@ -288,7 +291,7 @@ BOOST_AUTO_TEST_CASE(versionbits_computeblockversion)
     while (nTime < nTimeout && blocksToMine > 0) {
         lastBlock = firstChain.Mine(nHeight+1, nTime, VERSIONBITS_LAST_OLD_BLOCK_VERSION).Tip();
         BOOST_CHECK((ComputeBlockVersion(lastBlock, mainnetParams) & (1<<bit)) != 0);
-        BOOST_CHECK_EQUAL(ComputeBlockVersion(lastBlock, mainnetParams) & VERSIONBITS_TOP_MASK, VERSIONBITS_TOP_BITS);
+        BOOST_CHECK_EQUAL(ComputeBlockVersion(lastBlock, mainnetParams) & VERSIONBITS_TOP_MASK, VERSIONBITS_SHA_TOP_BITS | (1<<bit));
         blocksToMine--;
         nTime += 600;
         nHeight += 1;
@@ -317,7 +320,7 @@ BOOST_AUTO_TEST_CASE(versionbits_computeblockversion)
     BOOST_CHECK((ComputeBlockVersion(lastBlock, mainnetParams) & (1<<bit)) != 0);
 
     // Mine another period worth of blocks, signaling the new bit.
-    lastBlock = secondChain.Mine(4032, nStartTime, VERSIONBITS_TOP_BITS | (1<<bit)).Tip();
+    lastBlock = secondChain.Mine(4032, nStartTime, VERSIONBITS_SHA_TOP_BITS | VERSIONBITS_VOTING_BIT | (1<<bit)).Tip();
     // After one period of setting the bit on each block, it should have locked in.
     // We keep setting the bit for one more period though, until activation.
     BOOST_CHECK((ComputeBlockVersion(lastBlock, mainnetParams) & (1<<bit)) != 0);

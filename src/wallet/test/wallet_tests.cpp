@@ -371,6 +371,10 @@ BOOST_FIXTURE_TEST_CASE(rescan, TestChain100Setup)
     CreateAndProcessBlock({}, GetScriptForRawPubKey(coinbaseKey.GetPubKey()));
     CBlockIndex* newTip = chainActive.Tip();
 
+    const Consensus::Params& consensusParams = Params().GetConsensus();
+    const CAmount oldTipSubsidy = GetBlockSubsidy(oldTip->pprev->nBits, oldTip->pprev->nHeight, consensusParams);
+    const CAmount newTipSubsidy = GetBlockSubsidy(oldTip->nBits, oldTip->nHeight, consensusParams);
+
     // Verify ScanForWalletTransactions picks up transactions in both the old
     // and new block files.
     {
@@ -378,7 +382,7 @@ BOOST_FIXTURE_TEST_CASE(rescan, TestChain100Setup)
         LOCK(wallet.cs_wallet);
         wallet.AddKeyPubKey(coinbaseKey, coinbaseKey.GetPubKey());
         BOOST_CHECK_EQUAL(oldTip, wallet.ScanForWalletTransactions(oldTip));
-        BOOST_CHECK_EQUAL(wallet.GetImmatureBalance(), 1000 * COIN);
+        BOOST_CHECK_EQUAL(wallet.GetImmatureBalance(), oldTipSubsidy + newTipSubsidy);
     }
 
     // Prune the older block file.
@@ -392,7 +396,7 @@ BOOST_FIXTURE_TEST_CASE(rescan, TestChain100Setup)
         LOCK(wallet.cs_wallet);
         wallet.AddKeyPubKey(coinbaseKey, coinbaseKey.GetPubKey());
         BOOST_CHECK_EQUAL(newTip, wallet.ScanForWalletTransactions(oldTip));
-        BOOST_CHECK_EQUAL(wallet.GetImmatureBalance(), 500 * COIN);
+        BOOST_CHECK_EQUAL(wallet.GetImmatureBalance(), newTipSubsidy);
     }
 
     // Verify importmulti RPC returns failure for a key whose creation time is

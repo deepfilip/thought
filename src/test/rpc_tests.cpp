@@ -7,6 +7,7 @@
 
 #include "base58.h"
 #include "netbase.h"
+#include "utiltime.h"
 
 #include "test/test_thought.h"
 
@@ -113,10 +114,10 @@ BOOST_AUTO_TEST_CASE(rpc_rawsign)
       "\"vout\":1,\"scriptPubKey\":\"a914b10c9df5f7edf436c697f02f1efdba4cf399615187\","
       "\"redeemScript\":\"512103debedc17b3df2badbcdd86d5feb4562b86fe182e5998abd8bcd4f122c6155b1b21027e940bb73ab8732bfdf7f9216ecefca5b94d6df834e77e108f68e66f126044c052ae\"}]";
     r = CallRPC(std::string("createrawtransaction ")+prevout+" "+
-      "{\"7iYoULd4BAqRsRt1UbD5qqna88JvKRU3SL\":11}");
+      "{\"4uBaaaY3CubJ9PuQJesrSxt4ibWKG3cARB\":11}");
     std::string notsigned = r.get_str();
-    std::string privkey1 = "\"XEwTRsCX3CiWSQf8YmKMTeb84KyTbibkUv9mDTZHQ5MwuKG2ZzES\"";
-    std::string privkey2 = "\"XDmZ7LjGd94Q81eUBjb2h6uV5Y14s7fmeXWEGYabfBJP8RVpprBu\"";
+    std::string privkey1 = "\"KFyP7o1erkWNWVaukdM1yYvfu8hcypdsJ8hCtfVcdKKJ6WAMTcXd\"";
+    std::string privkey2 = "\"KEoUoGYQSgrGC6aFPbchD1F2vLjEFDhtTk3fwkWvtRFjKcNsUVrJ\"";
     r = CallRPC(std::string("signrawtransaction ")+notsigned+" "+prevout+" "+"[]");
     BOOST_CHECK(find_value(r.get_obj(), "complete").get_bool() == false);
     r = CallRPC(std::string("signrawtransaction ")+notsigned+" "+prevout+" "+"["+privkey1+","+privkey2+"]");
@@ -254,14 +255,16 @@ BOOST_AUTO_TEST_CASE(rpc_ban)
     ar = r.get_array();
     BOOST_CHECK_EQUAL(ar.size(), 0);
 
-    BOOST_CHECK_NO_THROW(r = CallRPC(std::string("setban 127.0.0.0/24 add 1607731200 true")));
+    const int64_t absoluteBanUntil = GetTime() + 24 * 60 * 60;
+    BOOST_CHECK_NO_THROW(r = CallRPC(std::string("setban 127.0.0.0/24 add ") + std::to_string(absoluteBanUntil) + " true"));
     BOOST_CHECK_NO_THROW(r = CallRPC(std::string("listbanned")));
     ar = r.get_array();
+    BOOST_REQUIRE_EQUAL(ar.size(), 1);
     o1 = ar[0].get_obj();
     adr = find_value(o1, "address");
     UniValue banned_until = find_value(o1, "banned_until");
     BOOST_CHECK_EQUAL(adr.get_str(), "127.0.0.0/24");
-    BOOST_CHECK_EQUAL(banned_until.get_int64(), 1607731200); // absolute time check
+    BOOST_CHECK_EQUAL(banned_until.get_int64(), absoluteBanUntil); // runtime-relative absolute time check
 
     BOOST_CHECK_NO_THROW(CallRPC(std::string("clearbanned")));
 

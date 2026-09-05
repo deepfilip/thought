@@ -16,14 +16,14 @@
 
 #include <boost/test/unit_test.hpp>
 
-static const std::string strSecret1     ("7qh6LYnLN2w2ntz2wwUhRUEgkQ2j8XB16FGw77ZRDZmC29bn7cD");
-static const std::string strSecret2     ("7rve4MxeWFQHGbSYH6J2yaaZd3MBUqoDEwN6ZAZ6ZHmhTT4r3hW");
-static const std::string strSecret1C    ("XBuxZHH6TqXUuaSjbVTFR1DQSYecxCB9QA1Koyx5tTc3ddhqEnhm");
-static const std::string strSecret2C    ("XHMkZqWcY6Zkoq1j42NBijD8z5N5FtNy2Wx7WyAfXX2HZgxry8cr");
-static const CThoughtAddress addr1 ("Xywgfc872nn5CKtpATCoAjZCc4v96pJczy");
-static const CThoughtAddress addr2 ("XpmouUj9KKJ99ZuU331ZS1KqsboeFnLGgK");
-static const CThoughtAddress addr1C("XxV9h4Xmv6Pup8tVAQmH97K6grzvDwMG9F");
-static const CThoughtAddress addr2C("Xn7ZrYdExuk79Dm7CJCw7sfUWi2qWJSbRy");
+static const std::string strSecret1     ("58Eo3mRkLa9gsSuuWzCmAVfxaA9ZUUv5MUYDLyqohVDn3iKtP8i");
+static const std::string strSecret2     ("59ULmac4UncwM9NQr926ic1qSoU1poYHWAdNo2qV3DEHV8cbZix");
+static const std::string strSecret1C    ("KCwtFD6EHPKLyfNWoMUuvuYxHMNnLJDGDNYmVBtR7hZPppfRAfVT");
+static const std::string strSecret2C    ("KJPgFmKkMeMcsuwWFtPrEdYgpt6EdzR5qjVZCB6zkkydkssrALpt");
+static const CThoughtAddress addr1 ("4Dd4j7ZE3LocmRGqUWDoi5mvBG947K92gj");
+static const CThoughtAddress addr2 ("44TBxzAGKsKgifHVM62ZyMYZSo2ZEJGbcY");
+static const CThoughtAddress addr1C("4CAXkZxtveRTPEGWUTnHgTXpG4Dq6LL8h9");
+static const CThoughtAddress addr2C("41nwv44MyTmeiK98WMDwfDtC5uFkW23pWj");
 
 
 static const std::string strAddressBad("Xta1praZQjyELweyMByXyiREw1ZRsjXzVP");

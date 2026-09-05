@@ -13,7 +13,7 @@
 
 BOOST_FIXTURE_TEST_SUITE(pow_tests, BasicTestingSetup)
 
-/* Test calculation of next difficulty target with DGW */
+/* Test current Thought difficulty-routing semantics on a historical synthetic chain. */
 BOOST_AUTO_TEST_CASE(get_next_work)
 {
     SelectParams(CBaseChainParams::MAIN);
@@ -118,28 +118,31 @@ BOOST_AUTO_TEST_CASE(get_next_work)
     blockIndexPrev22.pprev = &blockIndexPrev23;
 
     CBlockHeader blockHeader;
-    blockHeader.nTime = 1408732505; // Block #123457
-    BOOST_CHECK_EQUAL(GetNextWorkRequired(&blockIndexLast, &blockHeader, params), 0x1b1441de); // Block #123457 has 0x1b1441de
+    blockHeader.nTime = 1408732505; // Synthetic next block #123457
 
-    // test special rules for slow blocks on devnet/testnet
+    // Mainnet is in the MIDAS era at this height and has not yet reached DGW.
+    BOOST_REQUIRE(blockIndexLast.nHeight + 1 >= params.midasStartHeight);
+    BOOST_REQUIRE(blockIndexLast.nHeight + 1 < params.nPowDGWHeight);
+    BOOST_CHECK_EQUAL(GetNextWorkRequired(&blockIndexLast, &blockHeader, params), 0x1b2027b9);
+
+    // Devnet routes this same synthetic height through DGW and explicitly does
+    // not enable the old min-difficulty timestamp shortcut.
     SoftSetBoolArg("-devnet", true);
     SelectParams(CBaseChainParams::DEVNET);
     const Consensus::Params& paramsdev = Params().GetConsensus();
+    BOOST_REQUIRE(blockIndexLast.nHeight + 1 >= paramsdev.nPowDGWHeight);
+    BOOST_REQUIRE(!paramsdev.fPowAllowMinDifficultyBlocks);
 
-    // make sure normal rules apply
-    blockHeader.nTime = 1408732505; // Block #123457
-    BOOST_CHECK_EQUAL(GetNextWorkRequired(&blockIndexLast, &blockHeader, paramsdev), 0x1b1441de); // Block #123457 has 0x1b1441de
-
-    // 10x higher target
-    blockHeader.nTime = 1408733090; // Block #123457 (10m+1sec)
-    BOOST_CHECK_EQUAL(GetNextWorkRequired(&blockIndexLast, &blockHeader, paramsdev), 0x1c00c8f8); // Block #123457 has 0x1c00c8f8
-    blockHeader.nTime = 1408733689; // Block #123457 (20m)
-    BOOST_CHECK_EQUAL(GetNextWorkRequired(&blockIndexLast, &blockHeader, paramsdev), 0x1c00c8f8); // Block #123457 has 0x1c00c8f8
-    // lowest diff possible
-    blockHeader.nTime = 1408739690; // Block #123457 (2h+1sec)
-    BOOST_CHECK_EQUAL(GetNextWorkRequired(&blockIndexLast, &blockHeader, paramsdev), 0x207fffff); // Block #123457 has 0x207fffff
-    blockHeader.nTime = 1408743289; // Block #123457 (3h)
-    BOOST_CHECK_EQUAL(GetNextWorkRequired(&blockIndexLast, &blockHeader, paramsdev), 0x207fffff); // Block #123457 has 0x207fffff
+    blockHeader.nTime = 1408732505;
+    BOOST_CHECK_EQUAL(GetNextWorkRequired(&blockIndexLast, &blockHeader, paramsdev), 0x1b1c6c74);
+    blockHeader.nTime = 1408733090;
+    BOOST_CHECK_EQUAL(GetNextWorkRequired(&blockIndexLast, &blockHeader, paramsdev), 0x1b1c6c74);
+    blockHeader.nTime = 1408733689;
+    BOOST_CHECK_EQUAL(GetNextWorkRequired(&blockIndexLast, &blockHeader, paramsdev), 0x1b1c6c74);
+    blockHeader.nTime = 1408739690;
+    BOOST_CHECK_EQUAL(GetNextWorkRequired(&blockIndexLast, &blockHeader, paramsdev), 0x1b1c6c74);
+    blockHeader.nTime = 1408743289;
+    BOOST_CHECK_EQUAL(GetNextWorkRequired(&blockIndexLast, &blockHeader, paramsdev), 0x1b1c6c74);
 }
 
 /* Test the constraint on the upper bound for next work */

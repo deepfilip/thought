@@ -14,60 +14,22 @@ BOOST_FIXTURE_TEST_SUITE(subsidy_tests, TestingSetup)
 BOOST_AUTO_TEST_CASE(block_subsidy_test)
 {
     const Consensus::Params& consensusParams = Params(CBaseChainParams::MAIN).GetConsensus();
+    const uint32_t nPrevBits = 0x1d00ffff; // Current Thought subsidy logic is height-based.
+    const int interval = consensusParams.nSubsidyHalvingInterval;
 
-    uint32_t nPrevBits;
-    int32_t nPrevHeight;
-    CAmount nSubsidy;
+    // Block 1 is the explicit Thought premine.
+    BOOST_CHECK_EQUAL(GetBlockSubsidy(nPrevBits, 0, consensusParams, false), 809016994 * COIN);
 
-    // details for block 4249 (subsidy returned will be for block 4250)
-    nPrevBits = 0x1c4a47c4;
-    nPrevHeight = 4249;
-    nSubsidy = GetBlockSubsidy(nPrevBits, nPrevHeight, consensusParams, false);
-    BOOST_CHECK_EQUAL(nSubsidy, 50000000000ULL);
+    // Ordinary issuance is 314 THT until the first halving boundary.
+    BOOST_CHECK_EQUAL(GetBlockSubsidy(nPrevBits, 1, consensusParams, false), 314 * COIN);
+    BOOST_CHECK_EQUAL(GetBlockSubsidy(nPrevBits, interval - 2, consensusParams, false), 314 * COIN);
 
-    // details for block 4501 (subsidy returned will be for block 4502)
-    nPrevBits = 0x1c4a47c4;
-    nPrevHeight = 4501;
-    nSubsidy = GetBlockSubsidy(nPrevBits, nPrevHeight, consensusParams, false);
-    BOOST_CHECK_EQUAL(nSubsidy, 5600000000ULL);
+    // nPrevHeight is the previous block height, so interval-1 produces block `interval`.
+    BOOST_CHECK_EQUAL(GetBlockSubsidy(nPrevBits, interval - 1, consensusParams, false), 157 * COIN);
+    BOOST_CHECK_EQUAL(GetBlockSubsidy(nPrevBits, 2 * interval - 1, consensusParams, false), (314 * COIN) >> 2);
 
-    // details for block 5464 (subsidy returned will be for block 5465)
-    nPrevBits = 0x1c29ec00;
-    nPrevHeight = 5464;
-    nSubsidy = GetBlockSubsidy(nPrevBits, nPrevHeight, consensusParams, false);
-    BOOST_CHECK_EQUAL(nSubsidy, 2100000000ULL);
-
-    // details for block 5465 (subsidy returned will be for block 5466)
-    nPrevBits = 0x1c29ec00;
-    nPrevHeight = 5465;
-    nSubsidy = GetBlockSubsidy(nPrevBits, nPrevHeight, consensusParams, false);
-    BOOST_CHECK_EQUAL(nSubsidy, 12200000000ULL);
-
-    // details for block 17588 (subsidy returned will be for block 17589)
-    nPrevBits = 0x1c08ba34;
-    nPrevHeight = 17588;
-    nSubsidy = GetBlockSubsidy(nPrevBits, nPrevHeight, consensusParams, false);
-    BOOST_CHECK_EQUAL(nSubsidy, 6100000000ULL);
-
-    // details for block 99999 (subsidy returned will be for block 100000)
-    nPrevBits = 0x1b10cf42;
-    nPrevHeight = 99999;
-    nSubsidy = GetBlockSubsidy(nPrevBits, nPrevHeight, consensusParams, false);
-    BOOST_CHECK_EQUAL(nSubsidy, 500000000ULL);
-
-    // details for block 210239 (subsidy returned will be for block 210240)
-    nPrevBits = 0x1b11548e;
-    nPrevHeight = 210239;
-    nSubsidy = GetBlockSubsidy(nPrevBits, nPrevHeight, consensusParams, false);
-    BOOST_CHECK_EQUAL(nSubsidy, 500000000ULL);
-
-    // 1st subsidy reduction happens here
-
-    // details for block 210240 (subsidy returned will be for block 210241)
-    nPrevBits = 0x1b10d50b;
-    nPrevHeight = 210240;
-    nSubsidy = GetBlockSubsidy(nPrevBits, nPrevHeight, consensusParams, false);
-    BOOST_CHECK_EQUAL(nSubsidy, 464285715ULL);
+    // The implementation explicitly terminates once a 64-bit shift would be undefined.
+    BOOST_CHECK_EQUAL(GetBlockSubsidy(nPrevBits, 64 * interval - 1, consensusParams, false), 0);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
