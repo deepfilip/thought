@@ -68,16 +68,7 @@ A complete list of `@xxx` commands can be found at http://www.stack.nl/~dimitri/
 As Doxygen recognizes the comments by the delimiters (`/**` and `*/` in this case), you don't
 *need* to provide any commands for a comment to be valid; just a description text is fine.
 
-To describe a class use the same construct above the class definition:
-```c++
-/**
- * Alerts are for notifying old versions if they become too obsolete and
- * need to upgrade. The message is displayed in the status bar.
- * @see GetWarnings()
- */
-class CAlert
-{
-```
+To describe a class use the same construct above the class definition.
 
 To describe a member or variable use:
 ```c++

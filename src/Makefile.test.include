@@ -63,15 +63,12 @@ JSON_TEST_FILES = \
   test/data/tx_valid.json \
   test/data/sighash.json
 
-RAW_TEST_FILES = test/data/alertTests.raw
-
-GENERATED_TEST_FILES = $(JSON_TEST_FILES:.json=.json.h) $(RAW_TEST_FILES:.raw=.raw.h)
+GENERATED_TEST_FILES = $(JSON_TEST_FILES:.json=.json.h)
 
 THOUGHT_TESTS =\
   test/arith_uint256_tests.cpp \
   test/scriptnum10.h \
   test/addrman_tests.cpp \
-  test/alert_tests.cpp \
   test/amount_tests.cpp \
   test/allocator_tests.cpp \
   test/base32_tests.cpp \
@@ -137,7 +134,8 @@ THOUGHT_TESTS =\
   test/versionbits_tests.cpp \
   test/uint256_tests.cpp \
   test/univalue_tests.cpp \
-  test/util_tests.cpp
+  test/util_tests.cpp \
+  test/warnings_tests.cpp
 
 if ENABLE_WALLET
 THOUGHT_TESTS += \
@@ -148,7 +146,7 @@ THOUGHT_TESTS += \
   wallet/test/crypto_tests.cpp
 endif
 
-test_test_thought_SOURCES = $(THOUGHT_TESTS) $(JSON_TEST_FILES) $(RAW_TEST_FILES)
+test_test_thought_SOURCES = $(THOUGHT_TESTS) $(JSON_TEST_FILES)
 test_test_thought_CPPFLAGS = $(AM_CPPFLAGS) $(THOUGHT_INCLUDES) -I$(builddir)/test/ $(TESTDEFS) $(EVENT_CFLAGS)
 test_test_thought_LDADD = $(LIBTHOUGHT_SERVER) $(LIBTHOUGHT_CLI) $(LIBTHOUGHT_COMMON) $(LIBTHOUGHT_UTIL) $(LIBTHOUGHT_CONSENSUS) $(LIBTHOUGHT_CRYPTO) $(LIBUNIVALUE) $(LIBLEVELDB) $(LIBMEMENV) \
   $(BOOST_LIBS) $(BOOST_UNIT_TEST_FRAMEWORK_LIB) $(LIBSECP256K1) $(EVENT_LIBS)

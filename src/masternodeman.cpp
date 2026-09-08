@@ -4,7 +4,6 @@
 
 #include "activemasternode.h"
 #include "addrman.h"
-#include "alert.h"
 #include "clientversion.h"
 #include "init.h"
 #include "governance.h"
@@ -1963,9 +1962,9 @@ void CMasternodeMan::WarnMasternodeDaemonUpdates()
     // notify GetWarnings(), called by Qt and the JSON-RPC code to warn the user
     SetMiscWarning(strWarning);
     // trigger GUI update
-    uiInterface.NotifyAlertChanged(SerializeHash(strWarning), CT_NEW);
+    uiInterface.NotifyWarningChanged();
     // trigger cmd-line notification
-    CAlert::Notify(strWarning);
+    NotifyWarning(strWarning);
 
     fWarned = true;
 }

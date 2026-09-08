@@ -25,10 +25,13 @@
 #include <QDataStream>
 #include <QDateTime>
 #include <QDebug>
+#include <QDir>
+#include <QElapsedTimer>
 #include <QFile>
 #include <QFileOpenEvent>
 #include <QHash>
 #include <QList>
+#include <QLockFile>
 #include <QLocalServer>
 #include <QLocalSocket>
 #include <QNetworkAccessManager>
@@ -88,6 +91,68 @@ static QString ipcServerName()
     name.append(QString::number(qHash(ddir)));
 
     return name;
+}
+
+class IPCServerOwner : public QObject
+{
+public:
+    IPCServerOwner(const QString& lockPath, QObject* parent) :
+        QObject(parent), lockFile(lockPath), server(0)
+    {
+    }
+
+    ~IPCServerOwner()
+    {
+        // The listener must be destroyed before arbitration ownership is released.
+        delete server;
+    }
+
+    QLockFile lockFile;
+    QLocalServer* server;
+};
+
+enum IPCEndpointState
+{
+    IPC_ENDPOINT_LIVE,
+    IPC_ENDPOINT_STALE,
+    IPC_ENDPOINT_AMBIGUOUS
+};
+
+static IPCEndpointState probeIPCEndpoint(const QString& name)
+{
+    QLocalSocket socket;
+    socket.connectToServer(name, QIODevice::ReadWrite);
+    if (!socket.waitForConnected(THOUGHT_IPC_CONNECT_TIMEOUT))
+    {
+        if (socket.error() == QLocalSocket::ServerNotFoundError ||
+            socket.error() == QLocalSocket::ConnectionRefusedError)
+            return IPC_ENDPOINT_STALE;
+        return IPC_ENDPOINT_AMBIGUOUS;
+    }
+
+    QByteArray block;
+    QDataStream out(&block, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_4_0);
+    out << QString();
+
+    if (socket.write(block) != block.size() ||
+        !socket.waitForBytesWritten(THOUGHT_IPC_CONNECT_TIMEOUT))
+    {
+        socket.abort();
+        return IPC_ENDPOINT_LIVE;
+    }
+
+    socket.disconnectFromServer();
+    if (socket.state() != QLocalSocket::UnconnectedState)
+        socket.waitForDisconnected(THOUGHT_IPC_CONNECT_TIMEOUT);
+    return IPC_ENDPOINT_LIVE;
+}
+
+static void reportLocalServerFailure()
+{
+    // The constructor is called early in init, so don't use Q_EMIT message().
+    QMessageBox::critical(0, PaymentServer::tr("Payment request error"),
+        PaymentServer::tr("Cannot start thought: click-to-pay handler"));
 }
 
 //
@@ -313,24 +378,56 @@ PaymentServer::PaymentServer(QObject* parent, bool startLocalServer) :
     if (parent)
         parent->installEventFilter(this);
 
-    QString name = ipcServerName();
-
-    // Clean up old socket leftover from a crash:
-    QLocalServer::removeServer(name);
-
     if (startLocalServer)
     {
-        uriServer = new QLocalServer(this);
+        const QString name = ipcServerName();
+        const QString lockPath = QDir(QDir::tempPath()).filePath(name + ".ipc-lock");
+        IPCServerOwner* owner = new IPCServerOwner(lockPath, this);
+        owner->lockFile.setStaleLockTime(0);
 
-        if (!uriServer->listen(name)) {
-            // constructor is called early in init, so don't use "Q_EMIT message()" here
-            QMessageBox::critical(0, tr("Payment request error"),
-                tr("Cannot start thought: click-to-pay handler"));
+        if (!owner->lockFile.tryLock(0))
+        {
+            const QLockFile::LockError lockError = owner->lockFile.error();
+            delete owner;
+            if (lockError == QLockFile::PermissionError || lockError == QLockFile::UnknownError)
+                reportLocalServerFailure();
+            return;
         }
-        else {
-            connect(uriServer, SIGNAL(newConnection()), this, SLOT(handleURIConnection()));
-            connect(this, SIGNAL(receivedPaymentACK(QString)), this, SLOT(handlePaymentACK(QString)));
+
+        owner->server = new QLocalServer(owner);
+        uriServer = owner->server;
+
+        if (!uriServer->listen(name))
+        {
+            if (uriServer->serverError() != QAbstractSocket::AddressInUseError)
+            {
+                uriServer = 0;
+                delete owner;
+                reportLocalServerFailure();
+                return;
+            }
+
+            const IPCEndpointState endpointState = probeIPCEndpoint(name);
+            if (endpointState != IPC_ENDPOINT_STALE)
+            {
+                uriServer = 0;
+                delete owner;
+                return;
+            }
+
+            // A conclusively stale endpoint may be removed only while the
+            // arbitration lock is held. Listen is retried exactly once.
+            if (!QLocalServer::removeServer(name) || !uriServer->listen(name))
+            {
+                uriServer = 0;
+                delete owner;
+                reportLocalServerFailure();
+                return;
+            }
         }
+
+        connect(uriServer, SIGNAL(newConnection()), this, SLOT(handleURIConnection()));
+        connect(this, SIGNAL(receivedPaymentACK(QString)), this, SLOT(handlePaymentACK(QString)));
     }
 }
 
@@ -478,19 +575,25 @@ void PaymentServer::handleURIConnection()
 {
     QLocalSocket *clientConnection = uriServer->nextPendingConnection();
 
-    while (clientConnection->bytesAvailable() < (int)sizeof(quint32))
-        clientConnection->waitForReadyRead();
-
     connect(clientConnection, SIGNAL(disconnected()),
             clientConnection, SLOT(deleteLater()));
 
+    QElapsedTimer timer;
+    timer.start();
+    while (clientConnection->bytesAvailable() < (int)sizeof(quint32))
+    {
+        const int remaining = THOUGHT_IPC_CONNECT_TIMEOUT - (int)timer.elapsed();
+        if (remaining <= 0 || !clientConnection->waitForReadyRead(remaining))
+            return;
+    }
+
     QDataStream in(clientConnection);
     in.setVersion(QDataStream::Qt_4_0);
-    if (clientConnection->bytesAvailable() < (int)sizeof(quint16)) {
-        return;
-    }
     QString msg;
     in >> msg;
+
+    if (in.status() != QDataStream::Ok)
+        return;
 
     handleURIOrFile(msg);
 }

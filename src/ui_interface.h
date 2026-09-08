@@ -92,11 +92,8 @@ public:
     /** Number of masternodes changed. */
     boost::signals2::signal<void (int newNumMasternodes)> NotifyStrMasternodeCountChanged;
 
-    /**
-     * New, updated or cancelled alert.
-     * @note called with lock cs_mapAlerts held.
-     */
-    boost::signals2::signal<void (const uint256 &hash, ChangeType status)> NotifyAlertChanged;
+    /** Warning state changed. */
+    boost::signals2::signal<void ()> NotifyWarningChanged;
 
     /** A wallet has been loaded. */
     boost::signals2::signal<void (CWallet* wallet)> LoadWallet;

@@ -7,7 +7,6 @@
 
 #include "validation.h"
 
-#include "alert.h"
 #include "arith_uint256.h"
 #include "blockencodings.h"
 #include "chainparams.h"
@@ -95,7 +94,6 @@ bool fCheckBlockIndex = false;
 bool fCheckpointsEnabled = DEFAULT_CHECKPOINTS_ENABLED;
 size_t nCoinCacheUsage = 5000 * 300;
 uint64_t nPruneTarget = 0;
-bool fAlerts = DEFAULT_ALERTS;
 int64_t nMaxTipAge = DEFAULT_MAX_TIP_AGE;
 
 std::atomic<bool> fDIP0001ActiveAtTip{false};
@@ -1311,7 +1309,7 @@ void CheckForkWarningConditions()
             if(pindexBestForkBase->phashBlock){
                 std::string warning = std::string("'Warning: Large-work fork detected, forking after block ") +
                     pindexBestForkBase->phashBlock->ToString() + std::string("'");
-                CAlert::Notify(warning);
+                NotifyWarning(warning);
             }
         }
         if (pindexBestForkTip && pindexBestForkBase)
@@ -2513,7 +2511,7 @@ void static UpdateTip(CBlockIndex *pindexNew, const CChainParams& chainParams) {
                     std::string strWarning = strprintf(_("Warning: unknown new rules activated (versionbit %i)"), bit);
                     SetMiscWarning(strWarning);
                     if (!fWarned) {
-                        CAlert::Notify(strWarning);
+                        NotifyWarning(strWarning);
                         fWarned = true;
                     }
                 } else {
@@ -2525,7 +2523,7 @@ void static UpdateTip(CBlockIndex *pindexNew, const CChainParams& chainParams) {
         for (int i = 0; i < 100 && pindex != NULL; i++)
         {
             int32_t nExpectedVersion = ComputeBlockVersion(pindex->pprev, chainParams.GetConsensus());
-            if (pindex->nVersion > VERSIONBITS_LAST_OLD_BLOCK_VERSION && (pindex->nVersion & ~nExpectedVersion) != 0 && pindex->nVersion & VERSIONBITS_VOTING_BIT == 0)
+            if (pindex->nVersion > VERSIONBITS_LAST_OLD_BLOCK_VERSION && (pindex->nVersion & ~nExpectedVersion) != 0 && (pindex->nVersion & VERSIONBITS_VOTING_BIT) == 0)
                 ++nUpgraded;
             pindex = pindex->pprev;
         }
@@ -2537,7 +2535,7 @@ void static UpdateTip(CBlockIndex *pindexNew, const CChainParams& chainParams) {
             // notify GetWarnings(), called by Qt and the JSON-RPC code to warn the user:
             SetMiscWarning(strWarning);
             if (!fWarned) {
-                CAlert::Notify(strWarning);
+                NotifyWarning(strWarning);
                 fWarned = true;
             }
         }

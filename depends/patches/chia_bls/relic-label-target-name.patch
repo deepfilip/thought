@@ -1,0 +1,36 @@
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -30,7 +30,12 @@
+ find_library(GMP_NAME NAMES libgmp.a gmp)
+ find_library(SODIUM_NAME NAMES libsodium.a sodium)
+ 
++set(RELIC_STATIC_TARGET "relic_s")
++if(LABEL)
++  set(RELIC_STATIC_TARGET "relic_s_${LABEL}")
++endif()
++
+ set(LIBRARIES_TO_COMBINE
+       COMMAND mkdir ${OPREFIX}$<TARGET_NAME:chiablstmp> || true && cd ${OPREFIX}$<TARGET_NAME:chiablstmp> &&  ${CMAKE_AR} -x $<TARGET_FILE:chiablstmp>
+-      COMMAND mkdir ${OPREFIX}$<TARGET_NAME:relic_s> || true && cd ${OPREFIX}$<TARGET_NAME:relic_s> &&  ${CMAKE_AR} -x $<TARGET_FILE:relic_s>
++      COMMAND mkdir ${OPREFIX}$<TARGET_NAME:${RELIC_STATIC_TARGET}> || true && cd ${OPREFIX}$<TARGET_NAME:${RELIC_STATIC_TARGET}> &&  ${CMAKE_AR} -x $<TARGET_FILE:${RELIC_STATIC_TARGET}>
+ )
+@@ -45,6 +50,6 @@
+ add_custom_target(combined_custom
+         ${LIBRARIES_TO_COMBINE}
+         COMMAND ${CMAKE_AR} -rs ${C_LIB} ${OPREFIX}*/*${CMAKE_C_OUTPUT_EXTENSION}
+         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+-        DEPENDS chiablstmp relic_s
++        DEPENDS chiablstmp ${RELIC_STATIC_TARGET}
+         )
+@@ -69,7 +74,7 @@
+ if (SODIUM_FOUND)
+-  target_link_libraries(runtest chiablstmp relic_s sodium)
+-  target_link_libraries(runbench chiablstmp relic_s sodium)
++  target_link_libraries(runtest chiablstmp ${RELIC_STATIC_TARGET} sodium)
++  target_link_libraries(runbench chiablstmp ${RELIC_STATIC_TARGET} sodium)
+ else()
+-  target_link_libraries(runtest chiablstmp relic_s)
+-  target_link_libraries(runbench chiablstmp relic_s)
++  target_link_libraries(runtest chiablstmp ${RELIC_STATIC_TARGET})
++  target_link_libraries(runbench chiablstmp ${RELIC_STATIC_TARGET})
+ endif()

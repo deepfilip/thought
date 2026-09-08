@@ -10,7 +10,8 @@
 #endif
 static const char UNUSED *thought_strings[] = {
 QT_TRANSLATE_NOOP("thought-core", "Thought Core"),
-QT_TRANSLATE_NOOP("thought-core", "The %s developers"),
+QT_TRANSLATE_NOOP("thought-core", "%s"),
+QT_TRANSLATE_NOOP("thought-core", "Thought Network Ltd"),
 QT_TRANSLATE_NOOP("thought-core", ""
 "%s file contains all private keys from this wallet. Do not share it with "
 "anyone!"),
@@ -58,8 +59,8 @@ QT_TRANSLATE_NOOP("thought-core", ""
 "Disable all Thought specific functionality (Masternodes, PrivateSend, "
 "InstantSend, Governance) (0-1, default: %u)"),
 QT_TRANSLATE_NOOP("thought-core", ""
-"Discover own IP addresses (default: 1 when listening and no -externalip or -"
-"proxy)"),
+"Discover own IP addresses (default: 1 when listening and no -externalip or "
+"-proxy)"),
 QT_TRANSLATE_NOOP("thought-core", ""
 "Distributed under the MIT software license, see the accompanying file %s or "
 "%s"),
@@ -88,8 +89,8 @@ QT_TRANSLATE_NOOP("thought-core", ""
 QT_TRANSLATE_NOOP("thought-core", ""
 "Error: Listening for incoming connections failed (listen returned error %s)"),
 QT_TRANSLATE_NOOP("thought-core", ""
-"Execute command when a relevant alert is received or we see a really long "
-"fork (%s in cmd is replaced by message)"),
+"Execute command when a relevant warning is generated (%s in cmd is replaced "
+"by message)"),
 QT_TRANSLATE_NOOP("thought-core", ""
 "Execute command when a wallet InstantSend transaction is successfully locked "
 "(%s in cmd is replaced by TxID)"),
@@ -198,8 +199,8 @@ QT_TRANSLATE_NOOP("thought-core", ""
 QT_TRANSLATE_NOOP("thought-core", ""
 "Prune configured below the minimum of %d MiB.  Please use a higher number."),
 QT_TRANSLATE_NOOP("thought-core", ""
-"Prune: last wallet synchronisation goes beyond pruned data. You need to -"
-"reindex (download the whole blockchain again in case of pruned node)"),
+"Prune: last wallet synchronisation goes beyond pruned data. You need to "
+"-reindex (download the whole blockchain again in case of pruned node)"),
 QT_TRANSLATE_NOOP("thought-core", ""
 "Query for peer addresses via DNS lookup, if low on addresses (default: 1 "
 "unless -connect/-noconnect)"),
@@ -251,8 +252,8 @@ QT_TRANSLATE_NOOP("thought-core", ""
 "Total length of network version string (%i) exceeds maximum length (%i). "
 "Reduce the number or size of uacomments."),
 QT_TRANSLATE_NOOP("thought-core", ""
-"Transaction index can't be disabled in full mode. Either start with -"
-"litemode command line switch or enable transaction index."),
+"Transaction index can't be disabled in full mode. Either start with "
+"-litemode command line switch or enable transaction index."),
 QT_TRANSLATE_NOOP("thought-core", ""
 "Tries to keep outbound traffic under the given target (in MiB per 24h), 0 = "
 "no limit (default: %d)"),
@@ -330,7 +331,8 @@ QT_TRANSLATE_NOOP("thought-core", ""
 "Whitelisted peers cannot be DoS banned and their transactions are always "
 "relayed, even if they are already in the mempool, useful e.g. for a gateway"),
 QT_TRANSLATE_NOOP("thought-core", ""
-"You are starting in lite mode, all Thought-specific functionality is disabled."),
+"You are starting in lite mode, all Thought-specific functionality is "
+"disabled."),
 QT_TRANSLATE_NOOP("thought-core", ""
 "You must specify a masternodeprivkey in the configuration. Please see "
 "documentation for help."),
@@ -517,7 +519,6 @@ QT_TRANSLATE_NOOP("thought-core", "Pruning blockstore..."),
 QT_TRANSLATE_NOOP("thought-core", "RPC server options:"),
 QT_TRANSLATE_NOOP("thought-core", "Rebuild chain state and block index from the blk*.dat files on disk"),
 QT_TRANSLATE_NOOP("thought-core", "Rebuild chain state from the currently indexed blocks"),
-QT_TRANSLATE_NOOP("thought-core", "Receive and display P2P network alerts (default: %u)"),
 QT_TRANSLATE_NOOP("thought-core", "Reducing -maxconnections from %d to %d, because of system limitations."),
 QT_TRANSLATE_NOOP("thought-core", "Relay and mine data carrier transactions (default: %u)"),
 QT_TRANSLATE_NOOP("thought-core", "Relay non-P2SH multisig (default: %u)"),
@@ -583,6 +584,7 @@ QT_TRANSLATE_NOOP("thought-core", "Unable to bind to %s on this computer (bind r
 QT_TRANSLATE_NOOP("thought-core", "Unable to bind to %s on this computer. %s is probably already running."),
 QT_TRANSLATE_NOOP("thought-core", "Unable to sign spork message, wrong key?"),
 QT_TRANSLATE_NOOP("thought-core", "Unable to start HTTP server. See debug log for details."),
+QT_TRANSLATE_NOOP("thought-core", "Unknown error"),
 QT_TRANSLATE_NOOP("thought-core", "Unknown network specified in -onlynet: '%s'"),
 QT_TRANSLATE_NOOP("thought-core", "Unknown response."),
 QT_TRANSLATE_NOOP("thought-core", "Unknown state: id = %u"),

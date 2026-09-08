@@ -21,7 +21,8 @@ soft-forks, and test that warning alerts are generated.
 VB_PERIOD = 144 # versionbits period length for regtest
 VB_THRESHOLD = 108 # versionbits activation threshold for regtest
 VB_TOP_BITS = 0x20000000
-VB_UNKNOWN_BIT = 27 # Choose a bit unassigned to any deployment
+VB_VOTING_BIT = 27
+VB_UNKNOWN_BIT = 4 # Valid versionbits position unassigned to any deployment
 
 WARN_UNKNOWN_RULES_MINED = "Unknown block versions being mined! It's possible unknown rules are in effect"
 WARN_UNKNOWN_RULES_ACTIVE = "unknown new rules activated (versionbit {})".format(VB_UNKNOWN_BIT)
@@ -100,6 +101,11 @@ class VersionBitsWarningTest(ThoughtTestFramework):
             alert_text = f.read()
         assert(VB_PATTERN.match(alert_text))
 
+    def test_unexpected_version_in_alert_file(self):
+        with open(self.alert_filename, 'r', encoding='utf8') as f:
+            alert_text = f.read()
+        assert(WARN_UNKNOWN_RULES_MINED in alert_text)
+
     def run_test(self):
         # Setup the p2p connection and start up the network thread.
         test_node = TestNode()
@@ -116,9 +122,24 @@ class VersionBitsWarningTest(ThoughtTestFramework):
         # 1. Have the node mine one period worth of blocks
         self.nodes[0].generate(VB_PERIOD)
 
-        # 2. Now build one period of blocks on the tip, with < VB_THRESHOLD
-        # blocks signaling some unknown bit.
-        nVersion = VB_TOP_BITS | (1<<VB_UNKNOWN_BIT)
+        # 2. Exercise the generic unexpected-version warning independently.
+        # These blocks set an unknown bit without the voting bit, so they must
+        # count as unexpected versions but must not signal versionbits.
+        nUnexpectedVersion = VB_TOP_BITS | (1<<VB_UNKNOWN_BIT)
+        self.send_blocks_with_version(test_node, 51, nUnexpectedVersion)
+        self.nodes[0].generate(VB_PERIOD - 51)
+        assert(WARN_UNKNOWN_RULES_MINED in self.nodes[0].getinfo()["errors"])
+        assert(WARN_UNKNOWN_RULES_MINED in self.nodes[0].getmininginfo()["errors"])
+        assert(WARN_UNKNOWN_RULES_MINED in self.nodes[0].getnetworkinfo()["warnings"])
+        self.test_unexpected_version_in_alert_file()
+
+        # Clear the generic warning while keeping the chain period-aligned.
+        self.nodes[0].generate(VB_PERIOD)
+        assert(WARN_UNKNOWN_RULES_MINED not in self.nodes[0].getinfo()["errors"])
+
+        # 3. Build one period with < VB_THRESHOLD blocks signalling an unknown
+        # deployment bit. Signalling requires the distinct voting bit.
+        nVersion = VB_TOP_BITS | (1<<VB_VOTING_BIT) | (1<<VB_UNKNOWN_BIT)
         self.send_blocks_with_version(test_node, VB_THRESHOLD-1, nVersion)
 
         # Fill rest of period with regular version blocks
@@ -129,17 +150,15 @@ class VersionBitsWarningTest(ThoughtTestFramework):
         assert(not VB_PATTERN.match(self.nodes[0].getmininginfo()["errors"]))
         assert(not VB_PATTERN.match(self.nodes[0].getnetworkinfo()["warnings"]))
 
-        # 3. Now build one period of blocks with >= VB_THRESHOLD blocks signaling
+        # 4. Now build one period of blocks with >= VB_THRESHOLD blocks signaling
         # some unknown bit
         self.send_blocks_with_version(test_node, VB_THRESHOLD, nVersion)
         self.nodes[0].generate(VB_PERIOD - VB_THRESHOLD)
-        # Might not get a versionbits-related alert yet, as we should
-        # have gotten a different alert due to more than 51/100 blocks
-        # being of unexpected version.
-        # Check that get*info() shows some kind of error.
-        assert(WARN_UNKNOWN_RULES_MINED in self.nodes[0].getinfo()["errors"])
-        assert(WARN_UNKNOWN_RULES_MINED in self.nodes[0].getmininginfo()["errors"])
-        assert(WARN_UNKNOWN_RULES_MINED in self.nodes[0].getnetworkinfo()["warnings"])
+        # Voting-bit signalling must not increment the generic unexpected-
+        # version counter.
+        assert(WARN_UNKNOWN_RULES_MINED not in self.nodes[0].getinfo()["errors"])
+        assert(WARN_UNKNOWN_RULES_MINED not in self.nodes[0].getmininginfo()["errors"])
+        assert(WARN_UNKNOWN_RULES_MINED not in self.nodes[0].getnetworkinfo()["warnings"])
 
         # Mine a period worth of expected blocks so the generic block-version warning
         # is cleared, and restart the node. This should move the versionbit state

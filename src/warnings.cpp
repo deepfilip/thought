@@ -6,9 +6,11 @@
 #include "sync.h"
 #include "clientversion.h"
 #include "util.h"
+#include "utilstrencodings.h"
 #include "warnings.h"
-#include "alert.h"
-#include "hash.h"
+
+#include <boost/algorithm/string/replace.hpp>
+#include <boost/thread.hpp>
 
 CCriticalSection cs_warnings;
 std::string strMiscWarning;
@@ -19,6 +21,25 @@ void SetMiscWarning(const std::string& strWarning)
 {
     LOCK(cs_warnings);
     strMiscWarning = strWarning;
+}
+
+void NotifyWarning(const std::string& strMessage, bool fThread)
+{
+    std::string strCmd = GetArg("-alertnotify", "");
+    if (strCmd.empty()) return;
+
+    // Warning text should be plain ascii coming from a trusted source, but to
+    // be safe we first strip anything not in safeChars, then add single quotes around
+    // the whole string before passing it to the shell:
+    std::string singleQuote("'");
+    std::string safeStatus = SanitizeString(strMessage);
+    safeStatus = singleQuote+safeStatus+singleQuote;
+    boost::replace_all(strCmd, "%s", safeStatus);
+
+    if (fThread)
+        boost::thread t(runCommand, strCmd); // thread runs free
+    else
+        runCommand(strCmd);
 }
 
 void SetfLargeWorkForkFound(bool flag)
@@ -47,11 +68,10 @@ bool GetfLargeWorkInvalidChainFound()
 
 std::string GetWarnings(const std::string& strFor)
 {
-    int nPriority = 0;
     std::string strStatusBar;
     std::string strRPC;
     std::string strGUI;
-    const std::string uiAlertSeperator = "<hr />";
+    const std::string uiWarningSeparator = "<hr />";
 
     LOCK(cs_warnings);
 
@@ -66,36 +86,19 @@ std::string GetWarnings(const std::string& strFor)
     // Misc warnings like out of disk space and clock is wrong
     if (strMiscWarning != "")
     {
-        nPriority = 1000;
         strStatusBar = strMiscWarning;
-        strGUI += (strGUI.empty() ? "" : uiAlertSeperator) + strMiscWarning;
+        strGUI += (strGUI.empty() ? "" : uiWarningSeparator) + strMiscWarning;
     }
 
     if (fLargeWorkForkFound)
     {
-        nPriority = 2000;
         strStatusBar = strRPC = "Warning: The network does not appear to fully agree! Some miners appear to be experiencing issues.";
-        strGUI += (strGUI.empty() ? "" : uiAlertSeperator) + _("Warning: The network does not appear to fully agree! Some miners appear to be experiencing issues.");
+        strGUI += (strGUI.empty() ? "" : uiWarningSeparator) + _("Warning: The network does not appear to fully agree! Some miners appear to be experiencing issues.");
     }
     else if (fLargeWorkInvalidChainFound)
     {
-        nPriority = 2000;
         strStatusBar = strRPC = "Warning: We do not appear to fully agree with our peers! You may need to upgrade, or other nodes may need to upgrade.";
-        strGUI += (strGUI.empty() ? "" : uiAlertSeperator) + _("Warning: We do not appear to fully agree with our peers! You may need to upgrade, or other nodes may need to upgrade.");
-    }
-
-    // Alerts
-    {
-        LOCK(cs_mapAlerts);
-        for (const auto& item : mapAlerts)
-        {
-            const CAlert& alert = item.second;
-            if (alert.AppliesToMe() && alert.nPriority > nPriority)
-            {
-                nPriority = alert.nPriority;
-                strStatusBar = strGUI = alert.strStatusBar;
-            }
-        }
+        strGUI += (strGUI.empty() ? "" : uiWarningSeparator) + _("Warning: We do not appear to fully agree with our peers! You may need to upgrade, or other nodes may need to upgrade.");
     }
 
     if (strFor == "gui")

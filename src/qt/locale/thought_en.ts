@@ -217,13 +217,13 @@
     </message>
     <message>
         <location line="+1"/>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR THT&lt;/b&gt;!</source>
-        <translation>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR THT&lt;/b&gt;!</translation>
+        <source>Are you sure you wish to encrypt your wallet?</source>
+        <translation>Are you sure you wish to encrypt your wallet?</translation>
     </message>
     <message>
         <location line="+0"/>
-        <source>Are you sure you wish to encrypt your wallet?</source>
-        <translation>Are you sure you wish to encrypt your wallet?</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR THOUGHT&lt;/b&gt;!</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+10"/>
@@ -310,530 +310,11 @@
     </message>
 </context>
 <context>
-    <name>ThoughtGUI</name>
-    <message>
-        <location filename="../thought.cpp" line="+558"/>
-        <source>A fatal error occurred. Thought Core can no longer continue safely and will quit.</source>
-        <translation>A fatal error occurred. Thought Core can no longer continue safely and will quit.</translation>
-    </message>
-    <message>
-        <location filename="../thoughtgui.cpp" line="+1129"/>
-        <source>Thought Core</source>
-        <translation>Thought Core</translation>
-    </message>
-    <message>
-        <location line="-986"/>
-        <source>Wallet</source>
-        <translation>Wallet</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Node</source>
-        <translation>Node</translation>
-    </message>
-    <message>
-        <location line="+147"/>
-        <source>&amp;Overview</source>
-        <translation>&amp;Overview</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Show general overview of wallet</source>
-        <translation>Show general overview of wallet</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>&amp;Send</source>
-        <translation>&amp;Send</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Send coins to a Thought address</source>
-        <translation>Send coins to a Thought address</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>&amp;Receive</source>
-        <translation>&amp;Receive</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Request payments (generates QR codes and thought: URIs)</source>
-        <translation>Request payments (generates QR codes and thought: URIs)</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>&amp;Transactions</source>
-        <translation>&amp;Transactions</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Browse transaction history</source>
-        <translation>Browse transaction history</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>&amp;Masternodes</source>
-        <translation>&amp;Masternodes</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Browse masternodes</source>
-        <translation>Browse masternodes</translation>
-    </message>
-    <message>
-        <location line="+29"/>
-        <source>E&amp;xit</source>
-        <translation>E&amp;xit</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Quit application</source>
-        <translation>Quit application</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Show information about Thought Core</source>
-        <translation>Show information about Thought Core</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>About &amp;Qt</source>
-        <translation>About &amp;Qt</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Show information about Qt</source>
-        <translation>Show information about Qt</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>&amp;Options...</source>
-        <translation>&amp;Options...</translation>
-    </message>
-    <message>
-        <location line="-7"/>
-        <source>&amp;About %1</source>
-        <translation>&amp;About %1</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Modify configuration options for %1</source>
-        <translation>Modify configuration options for %1</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>&amp;Show / Hide</source>
-        <translation>&amp;Show / Hide</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Show or hide the main Window</source>
-        <translation>Show or hide the main Window</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>&amp;Encrypt Wallet...</source>
-        <translation>&amp;Encrypt Wallet...</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Encrypt the private keys that belong to your wallet</source>
-        <translation>Encrypt the private keys that belong to your wallet</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>&amp;Backup Wallet...</source>
-        <translation>&amp;Backup Wallet...</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Backup wallet to another location</source>
-        <translation>Backup wallet to another location</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>&amp;Change Passphrase...</source>
-        <translation>&amp;Change Passphrase...</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Change the passphrase used for wallet encryption</source>
-        <translation>Change the passphrase used for wallet encryption</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>&amp;Unlock Wallet...</source>
-        <translation>&amp;Unlock Wallet...</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Unlock wallet</source>
-        <translation>Unlock wallet</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>&amp;Lock Wallet</source>
-        <translation>&amp;Lock Wallet</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Sign &amp;message...</source>
-        <translation>Sign &amp;message...</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Sign messages with your Thought addresses to prove you own them</source>
-        <translation>Sign messages with your Thought addresses to prove you own them</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>&amp;Verify message...</source>
-        <translation>&amp;Verify message...</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Verify messages to ensure they were signed with specified Thought addresses</source>
-        <translation>Verify messages to ensure they were signed with specified Thought addresses</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>&amp;Information</source>
-        <translation>&amp;Information</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Show diagnostic information</source>
-        <translation>Show diagnostic information</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>&amp;Debug console</source>
-        <translation>&amp;Debug console</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Open debugging console</source>
-        <translation>Open debugging console</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>&amp;Network Monitor</source>
-        <translation>&amp;Network Monitor</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Show network monitor</source>
-        <translation>Show network monitor</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>&amp;Peers list</source>
-        <translation>&amp;Peers list</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Show peers info</source>
-        <translation>Show peers info</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Wallet &amp;Repair</source>
-        <translation>Wallet &amp;Repair</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Show wallet repair options</source>
-        <translation>Show wallet repair options</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Open Wallet &amp;Configuration File</source>
-        <translation>Open Wallet &amp;Configuration File</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Open configuration file</source>
-        <translation>Open configuration file</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Open &amp;Masternode Configuration File</source>
-        <translation>Open &amp;Masternode Configuration File</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Open Masternode configuration file</source>
-        <translation>Open Masternode configuration file</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Show Automatic &amp;Backups</source>
-        <translation>Show Automatic &amp;Backups</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Show automatically created wallet backups</source>
-        <translation>Show automatically created wallet backups</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>&amp;Sending addresses...</source>
-        <translation>&amp;Sending addresses...</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Show the list of used sending addresses and labels</source>
-        <translation>Show the list of used sending addresses and labels</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>&amp;Receiving addresses...</source>
-        <translation>&amp;Receiving addresses...</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Show the list of used receiving addresses and labels</source>
-        <translation>Show the list of used receiving addresses and labels</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Open &amp;URI...</source>
-        <translation>Open &amp;URI...</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Open a thought: URI or payment request</source>
-        <translation>Open a thought: URI or payment request</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>&amp;Command-line options</source>
-        <translation>&amp;Command-line options</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Show the %1 help message to get a list with possible Thought command-line options</source>
-        <translation>Show the %1 help message to get a list with possible Thought command-line options</translation>
-    </message>
-    <message>
-        <location line="+290"/>
-        <source>%1 client</source>
-        <translation>%1 client</translation>
-    </message>
-    <message>
-        <location line="-288"/>
-        <source>&amp;PrivateSend information</source>
-        <translation>&amp;PrivateSend information</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Show the PrivateSend basic information</source>
-        <translation>Show the PrivateSend basic information</translation>
-    </message>
-    <message>
-        <location line="+62"/>
-        <source>&amp;File</source>
-        <translation>&amp;File</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>&amp;Settings</source>
-        <translation>&amp;Settings</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>&amp;Tools</source>
-        <translation>&amp;Tools</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>&amp;Help</source>
-        <translation>&amp;Help</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Tabs toolbar</source>
-        <translation>Tabs toolbar</translation>
-    </message>
-    <message numerus="yes">
-        <location line="+372"/>
-        <source>%n active connection(s) to Thought network</source>
-        <translation>
-            <numerusform>%n active connection to Thought network</numerusform>
-            <numerusform>%n active connections to Thought network</numerusform>
-        </translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Network activity disabled</source>
-        <translation>Network activity disabled</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Syncing Headers (%1%)...</source>
-        <translation>Syncing Headers (%1%)...</translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>Synchronizing with network...</source>
-        <translation>Synchronizing with network...</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Indexing blocks on disk...</source>
-        <translation>Indexing blocks on disk...</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Processing blocks on disk...</source>
-        <translation>Processing blocks on disk...</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Reindexing blocks on disk...</source>
-        <translation>Reindexing blocks on disk...</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Connecting to peers...</source>
-        <translation>Connecting to peers...</translation>
-    </message>
-    <message numerus="yes">
-        <location line="+9"/>
-        <source>Processed %n block(s) of transaction history.</source>
-        <translation>
-            <numerusform>Processed %n block of transaction history.</numerusform>
-            <numerusform>Processed %n blocks of transaction history.</numerusform>
-        </translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>%1 behind</source>
-        <translation>%1 behind</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Catching up...</source>
-        <translation>Catching up...</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Last received block was generated %1 ago.</source>
-        <translation>Last received block was generated %1 ago.</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Transactions after this will not yet be visible.</source>
-        <translation>Transactions after this will not yet be visible.</translation>
-    </message>
-    <message>
-        <location line="+31"/>
-        <source>Up to date</source>
-        <translation>Up to date</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Synchronizing additional data: %p%</source>
-        <translation>Synchronizing additional data: %p%</translation>
-    </message>
-    <message>
-        <location line="+33"/>
-        <source>Error</source>
-        <translation>Error</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Warning</source>
-        <translation>Warning</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Information</source>
-        <translation>Information</translation>
-    </message>
-    <message>
-        <location line="+95"/>
-        <source>Date: %1
-</source>
-        <translation>Date: %1
-</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Amount: %1
-</source>
-        <translation>Amount: %1
-</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Type: %1
-</source>
-        <translation>Type: %1
-</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Label: %1
-</source>
-        <translation>Label: %1
-</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Address: %1
-</source>
-        <translation>Address: %1
-</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Sent transaction</source>
-        <translation>Sent transaction</translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>Incoming transaction</source>
-        <translation>Incoming transaction</translation>
-    </message>
-    <message>
-        <location line="+54"/>
-        <source>HD key generation is &lt;b&gt;enabled&lt;/b&gt;</source>
-        <translation>HD key generation is &lt;b&gt;enabled&lt;/b&gt;</translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>HD key generation is &lt;b&gt;disabled&lt;/b&gt;</source>
-        <translation>HD key generation is &lt;b&gt;disabled&lt;/b&gt;</translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</source>
-        <translation>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt; for mixing only</source>
-        <translation>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt; for mixing only</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
-        <translation>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</translation>
-    </message>
-</context>
-<context>
     <name>ClientModel</name>
     <message>
-        <location filename="../clientmodel.cpp" line="+86"/>
+        <location filename="../clientmodel.cpp" line="+87"/>
         <source>Total: %1 (PS compatible: %2 / Enabled: %3)</source>
         <translation>Total: %1 (PS compatible: %2 / Enabled: %3)</translation>
-    </message>
-    <message>
-        <location line="+126"/>
-        <source>Network Alert</source>
-        <translation>Network Alert</translation>
     </message>
 </context>
 <context>
@@ -1227,8 +708,8 @@
     </message>
     <message>
         <location line="+4"/>
-        <source>&lt;h3&gt;PrivateSend Basics&lt;/h3&gt; PrivateSend gives you true financial privacy by obscuring the origins of your funds. All the Thought in your wallet is comprised of different &quot;inputs&quot; which you can think of as separate, discrete coins.&lt;br&gt; PrivateSend uses an innovative process to mix your inputs with the inputs of two other people, without having your coins ever leave your wallet. You retain control of your money at all times.&lt;hr&gt; &lt;b&gt;The PrivateSend process works like this:&lt;/b&gt;&lt;ol type=&quot;1&quot;&gt; &lt;li&gt;PrivateSend begins by breaking your transaction inputs down into standard denominations. These denominations are 0.001 THT, 0.01 THT, 0.1 THT, 1 THT and 10 THT -- sort of like the paper money you use every day.&lt;/li&gt; &lt;li&gt;Your wallet then sends requests to specially configured software nodes on the network, called &quot;masternodes.&quot; These masternodes are informed then that you are interested in mixing a certain denomination. No identifiable information is sent to the masternodes, so they never know &quot;who&quot; you are.&lt;/li&gt; &lt;li&gt;When two other people send similar messages, indicating that they wish to mix the same denomination, a mixing session begins. The masternode mixes up the inputs and instructs all three users&apos; wallets to pay the now-transformed input back to themselves. Your wallet pays that denomination directly to itself, but in a different address (called a change address).&lt;/li&gt; &lt;li&gt;In order to fully obscure your funds, your wallet must repeat this process a number of times with each denomination. Each time the process is completed, it&apos;s called a &quot;round.&quot; Each round of PrivateSend makes it exponentially more difficult to determine where your funds originated.&lt;/li&gt; &lt;li&gt;This mixing process happens in the background without any intervention on your part. When you wish to make a transaction, your funds will already be anonymized. No additional waiting is required.&lt;/li&gt; &lt;/ol&gt; &lt;hr&gt;&lt;b&gt;IMPORTANT:&lt;/b&gt; Your wallet only contains 1000 of these &quot;change addresses.&quot; Every time a mixing event happens, up to 9 of your addresses are used up. This means those 1000 addresses last for about 100 mixing events. When 900 of them are used, your wallet must create more addresses. It can only do this, however, if you have automatic backups enabled.&lt;br&gt; Consequently, users who have backups disabled will also have PrivateSend disabled. &lt;hr&gt;For more information, see the &lt;a href=&quot;https://docs.thought.org/en/latest/wallets/thoughtcore/privatesend-instantsend.html&quot;&gt;PrivateSend documentation&lt;/a&gt;.</source>
-        <translation>&lt;h3&gt;PrivateSend Basics&lt;/h3&gt; PrivateSend gives you true financial privacy by obscuring the origins of your funds. All the Thought in your wallet is comprised of different &quot;inputs&quot; which you can think of as separate, discrete coins.&lt;br&gt; PrivateSend uses an innovative process to mix your inputs with the inputs of two other people, without having your coins ever leave your wallet. You retain control of your money at all times.&lt;hr&gt; &lt;b&gt;The PrivateSend process works like this:&lt;/b&gt;&lt;ol type=&quot;1&quot;&gt; &lt;li&gt;PrivateSend begins by breaking your transaction inputs down into standard denominations. These denominations are 0.001 THT, 0.01 THT, 0.1 THT, 1 THT and 10 THT -- sort of like the paper money you use every day.&lt;/li&gt; &lt;li&gt;Your wallet then sends requests to specially configured software nodes on the network, called &quot;masternodes.&quot; These masternodes are informed then that you are interested in mixing a certain denomination. No identifiable information is sent to the masternodes, so they never know &quot;who&quot; you are.&lt;/li&gt; &lt;li&gt;When two other people send similar messages, indicating that they wish to mix the same denomination, a mixing session begins. The masternode mixes up the inputs and instructs all three users&apos; wallets to pay the now-transformed input back to themselves. Your wallet pays that denomination directly to itself, but in a different address (called a change address).&lt;/li&gt; &lt;li&gt;In order to fully obscure your funds, your wallet must repeat this process a number of times with each denomination. Each time the process is completed, it&apos;s called a &quot;round.&quot; Each round of PrivateSend makes it exponentially more difficult to determine where your funds originated.&lt;/li&gt; &lt;li&gt;This mixing process happens in the background without any intervention on your part. When you wish to make a transaction, your funds will already be anonymized. No additional waiting is required.&lt;/li&gt; &lt;/ol&gt; &lt;hr&gt;&lt;b&gt;IMPORTANT:&lt;/b&gt; Your wallet only contains 1000 of these &quot;change addresses.&quot; Every time a mixing event happens, up to 9 of your addresses are used up. This means those 1000 addresses last for about 100 mixing events. When 900 of them are used, your wallet must create more addresses. It can only do this, however, if you have automatic backups enabled.&lt;br&gt; Consequently, users who have backups disabled will also have PrivateSend disabled. &lt;hr&gt;For more information, see the &lt;a href=&quot;https://docs.thought.org/en/latest/wallets/thoughtcore/privatesend-instantsend.html&quot;&gt;PrivateSend documentation&lt;/a&gt;.</translation>
+        <source>&lt;h3&gt;PrivateSend Basics&lt;/h3&gt; PrivateSend gives you true financial privacy by obscuring the origins of your funds. All the Thought in your wallet is comprised of different &quot;inputs&quot; which you can think of as separate, discrete coins.&lt;br&gt; PrivateSend uses an innovative process to mix your inputs with the inputs of two other people, without having your coins ever leave your wallet. You retain control of your money at all times.&lt;hr&gt; &lt;b&gt;The PrivateSend process works like this:&lt;/b&gt;&lt;ol type=&quot;1&quot;&gt; &lt;li&gt;PrivateSend begins by breaking your transaction inputs down into standard denominations. These denominations are 0.001 THT, 0.01 THT, 0.1 THT, 1 THT and 10 THT -- sort of like the paper money you use every day.&lt;/li&gt; &lt;li&gt;Your wallet then sends requests to specially configured software nodes on the network, called &quot;masternodes.&quot; These masternodes are informed then that you are interested in mixing a certain denomination. No identifiable information is sent to the masternodes, so they never know &quot;who&quot; you are.&lt;/li&gt; &lt;li&gt;When two other people send similar messages, indicating that they wish to mix the same denomination, a mixing session begins. The masternode mixes up the inputs and instructs all three users&apos; wallets to pay the now-transformed input back to themselves. Your wallet pays that denomination directly to itself, but in a different address (called a change address).&lt;/li&gt; &lt;li&gt;In order to fully obscure your funds, your wallet must repeat this process a number of times with each denomination. Each time the process is completed, it&apos;s called a &quot;round.&quot; Each round of PrivateSend makes it exponentially more difficult to determine where your funds originated.&lt;/li&gt; &lt;li&gt;This mixing process happens in the background without any intervention on your part. When you wish to make a transaction, your funds will already be anonymized. No additional waiting is required.&lt;/li&gt; &lt;/ol&gt; &lt;hr&gt;&lt;b&gt;IMPORTANT:&lt;/b&gt; Your wallet only contains 1000 of these &quot;change addresses.&quot; Every time a mixing event happens, up to 9 of your addresses are used up. This means those 1000 addresses last for about 100 mixing events. When 900 of them are used, your wallet must create more addresses. It can only do this, however, if you have automatic backups enabled.&lt;br&gt; Consequently, users who have backups disabled will also have PrivateSend disabled.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1303,7 +784,7 @@
     </message>
     <message>
         <location line="+34"/>
-        <location filename="../masternodelist.cpp" line="+682"/>
+        <location filename="../masternodelist.cpp" line="+685"/>
         <source>Alias</source>
         <translation>Alias</translation>
     </message>
@@ -2016,7 +1497,17 @@ https://www.transifex.com/projects/p/thought/</translation>
         <translation>Third party transaction URLs</translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+21"/>
+        <source>Transaction &amp;notifications:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Choose which transactions you are notified about.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+31"/>
         <source>Active command-line options that override above options:</source>
         <translation>Active command-line options that override above options:</translation>
     </message>
@@ -2041,12 +1532,12 @@ https://www.transifex.com/projects/p/thought/</translation>
         <translation>&amp;Cancel</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.cpp" line="+110"/>
+        <location filename="../optionsdialog.cpp" line="+111"/>
         <source>default</source>
         <translation>default</translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+65"/>
         <source>none</source>
         <translation>none</translation>
     </message>
@@ -2589,7 +2080,7 @@ https://www.transifex.com/projects/p/thought/</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../thought.cpp" line="+132"/>
+        <location filename="../thought.cpp" line="+692"/>
         <source>Thought Core</source>
         <translation>Thought Core</translation>
     </message>
@@ -2604,7 +2095,7 @@ https://www.transifex.com/projects/p/thought/</translation>
         <translation>Error reading masternode configuration file: %1</translation>
     </message>
     <message>
-        <location filename="../thoughtunits.cpp" line="+233"/>
+        <location filename="../thoughtunits.cpp" line="+234"/>
         <source>Amount</source>
         <translation>Amount</translation>
     </message>
@@ -4057,7 +3548,7 @@ https://www.transifex.com/projects/p/thought/</translation>
 <context>
     <name>ShutdownWindow</name>
     <message>
-        <location filename="../utilitydialog.cpp" line="+71"/>
+        <location filename="../utilitydialog.cpp" line="+70"/>
         <source>%1 is shutting down...</source>
         <translation>%1 is shutting down...</translation>
     </message>
@@ -4257,15 +3748,529 @@ https://www.transifex.com/projects/p/thought/</translation>
         <translation>[testnet]</translation>
     </message>
     <message>
-        <location filename="../splashscreen.cpp" line="+50"/>
+        <location filename="../splashscreen.cpp" line="+54"/>
         <source>Version %1</source>
         <translation>Version %1</translation>
     </message>
 </context>
 <context>
+    <name>ThoughtGUI</name>
+    <message>
+        <location filename="../thought.cpp" line="-113"/>
+        <source>A fatal error occurred. Thought Core can no longer continue safely and will quit.</source>
+        <translation>A fatal error occurred. Thought Core can no longer continue safely and will quit.</translation>
+    </message>
+    <message>
+        <location filename="../thoughtgui.cpp" line="+1133"/>
+        <source>Thought Core</source>
+        <translation>Thought Core</translation>
+    </message>
+    <message>
+        <location line="-986"/>
+        <source>Wallet</source>
+        <translation>Wallet</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Node</source>
+        <translation>Node</translation>
+    </message>
+    <message>
+        <location line="+147"/>
+        <source>&amp;Overview</source>
+        <translation>&amp;Overview</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Show general overview of wallet</source>
+        <translation>Show general overview of wallet</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>&amp;Send</source>
+        <translation>&amp;Send</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Send coins to a Thought address</source>
+        <translation>Send coins to a Thought address</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>&amp;Receive</source>
+        <translation>&amp;Receive</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Request payments (generates QR codes and thought: URIs)</source>
+        <translation>Request payments (generates QR codes and thought: URIs)</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>&amp;Transactions</source>
+        <translation>&amp;Transactions</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Browse transaction history</source>
+        <translation>Browse transaction history</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>&amp;Masternodes</source>
+        <translation>&amp;Masternodes</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Browse masternodes</source>
+        <translation>Browse masternodes</translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <source>E&amp;xit</source>
+        <translation>E&amp;xit</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Quit application</source>
+        <translation>Quit application</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Show information about Thought Core</source>
+        <translation>Show information about Thought Core</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>About &amp;Qt</source>
+        <translation>About &amp;Qt</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Show information about Qt</source>
+        <translation>Show information about Qt</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>&amp;Options...</source>
+        <translation>&amp;Options...</translation>
+    </message>
+    <message>
+        <location line="-7"/>
+        <source>&amp;About %1</source>
+        <translation>&amp;About %1</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Modify configuration options for %1</source>
+        <translation>Modify configuration options for %1</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&amp;Show / Hide</source>
+        <translation>&amp;Show / Hide</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Show or hide the main Window</source>
+        <translation>Show or hide the main Window</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>&amp;Encrypt Wallet...</source>
+        <translation>&amp;Encrypt Wallet...</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Encrypt the private keys that belong to your wallet</source>
+        <translation>Encrypt the private keys that belong to your wallet</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>&amp;Backup Wallet...</source>
+        <translation>&amp;Backup Wallet...</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Backup wallet to another location</source>
+        <translation>Backup wallet to another location</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>&amp;Change Passphrase...</source>
+        <translation>&amp;Change Passphrase...</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Change the passphrase used for wallet encryption</source>
+        <translation>Change the passphrase used for wallet encryption</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>&amp;Unlock Wallet...</source>
+        <translation>&amp;Unlock Wallet...</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Unlock wallet</source>
+        <translation>Unlock wallet</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>&amp;Lock Wallet</source>
+        <translation>&amp;Lock Wallet</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Sign &amp;message...</source>
+        <translation>Sign &amp;message...</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Sign messages with your Thought addresses to prove you own them</source>
+        <translation>Sign messages with your Thought addresses to prove you own them</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>&amp;Verify message...</source>
+        <translation>&amp;Verify message...</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Verify messages to ensure they were signed with specified Thought addresses</source>
+        <translation>Verify messages to ensure they were signed with specified Thought addresses</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>&amp;Information</source>
+        <translation>&amp;Information</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Show diagnostic information</source>
+        <translation>Show diagnostic information</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>&amp;Debug console</source>
+        <translation>&amp;Debug console</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Open debugging console</source>
+        <translation>Open debugging console</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>&amp;Network Monitor</source>
+        <translation>&amp;Network Monitor</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Show network monitor</source>
+        <translation>Show network monitor</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>&amp;Peers list</source>
+        <translation>&amp;Peers list</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Show peers info</source>
+        <translation>Show peers info</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Wallet &amp;Repair</source>
+        <translation>Wallet &amp;Repair</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Show wallet repair options</source>
+        <translation>Show wallet repair options</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Open Wallet &amp;Configuration File</source>
+        <translation>Open Wallet &amp;Configuration File</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Open configuration file</source>
+        <translation>Open configuration file</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Open &amp;Masternode Configuration File</source>
+        <translation>Open &amp;Masternode Configuration File</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Open Masternode configuration file</source>
+        <translation>Open Masternode configuration file</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Show Automatic &amp;Backups</source>
+        <translation>Show Automatic &amp;Backups</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Show automatically created wallet backups</source>
+        <translation>Show automatically created wallet backups</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>&amp;Sending addresses...</source>
+        <translation>&amp;Sending addresses...</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Show the list of used sending addresses and labels</source>
+        <translation>Show the list of used sending addresses and labels</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>&amp;Receiving addresses...</source>
+        <translation>&amp;Receiving addresses...</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Show the list of used receiving addresses and labels</source>
+        <translation>Show the list of used receiving addresses and labels</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Open &amp;URI...</source>
+        <translation>Open &amp;URI...</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Open a thought: URI or payment request</source>
+        <translation>Open a thought: URI or payment request</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>&amp;Command-line options</source>
+        <translation>&amp;Command-line options</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Show the %1 help message to get a list with possible Thought command-line options</source>
+        <translation>Show the %1 help message to get a list with possible Thought command-line options</translation>
+    </message>
+    <message>
+        <location line="+290"/>
+        <source>%1 client</source>
+        <translation>%1 client</translation>
+    </message>
+    <message>
+        <location line="-288"/>
+        <source>&amp;PrivateSend information</source>
+        <translation>&amp;PrivateSend information</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Show the PrivateSend basic information</source>
+        <translation>Show the PrivateSend basic information</translation>
+    </message>
+    <message>
+        <location line="+62"/>
+        <source>&amp;File</source>
+        <translation>&amp;File</translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>&amp;Settings</source>
+        <translation>&amp;Settings</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>&amp;Tools</source>
+        <translation>&amp;Tools</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>&amp;Help</source>
+        <translation>&amp;Help</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Tabs toolbar</source>
+        <translation>Tabs toolbar</translation>
+    </message>
+    <message numerus="yes">
+        <location line="+372"/>
+        <source>%n active connection(s) to Thought network</source>
+        <translation>
+            <numerusform>%n active connection to Thought network</numerusform>
+            <numerusform>%n active connections to Thought network</numerusform>
+        </translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Network activity disabled</source>
+        <translation>Network activity disabled</translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>Syncing Headers (%1%)...</source>
+        <translation>Syncing Headers (%1%)...</translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <source>Synchronizing with network...</source>
+        <translation>Synchronizing with network...</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Indexing blocks on disk...</source>
+        <translation>Indexing blocks on disk...</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Processing blocks on disk...</source>
+        <translation>Processing blocks on disk...</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Reindexing blocks on disk...</source>
+        <translation>Reindexing blocks on disk...</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Connecting to peers...</source>
+        <translation>Connecting to peers...</translation>
+    </message>
+    <message numerus="yes">
+        <location line="+9"/>
+        <source>Processed %n block(s) of transaction history.</source>
+        <translation>
+            <numerusform>Processed %n block of transaction history.</numerusform>
+            <numerusform>Processed %n blocks of transaction history.</numerusform>
+        </translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <source>%1 behind</source>
+        <translation>%1 behind</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Catching up...</source>
+        <translation>Catching up...</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Last received block was generated %1 ago.</source>
+        <translation>Last received block was generated %1 ago.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Transactions after this will not yet be visible.</source>
+        <translation>Transactions after this will not yet be visible.</translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>Up to date</source>
+        <translation>Up to date</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Synchronizing additional data: %p%</source>
+        <translation>Synchronizing additional data: %p%</translation>
+    </message>
+    <message>
+        <location line="+33"/>
+        <source>Error</source>
+        <translation>Error</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Warning</source>
+        <translation>Warning</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Information</source>
+        <translation>Information</translation>
+    </message>
+    <message>
+        <location line="+100"/>
+        <source>Date: %1
+</source>
+        <translation>Date: %1
+</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Amount: %1
+</source>
+        <translation>Amount: %1
+</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Type: %1
+</source>
+        <translation>Type: %1
+</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Label: %1
+</source>
+        <translation>Label: %1
+</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Address: %1
+</source>
+        <translation>Address: %1
+</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Sent transaction</source>
+        <translation>Sent transaction</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Incoming transaction</source>
+        <translation>Incoming transaction</translation>
+    </message>
+    <message>
+        <location line="+54"/>
+        <source>HD key generation is &lt;b&gt;enabled&lt;/b&gt;</source>
+        <translation>HD key generation is &lt;b&gt;enabled&lt;/b&gt;</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>HD key generation is &lt;b&gt;disabled&lt;/b&gt;</source>
+        <translation>HD key generation is &lt;b&gt;disabled&lt;/b&gt;</translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</source>
+        <translation>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt;</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt; for mixing only</source>
+        <translation>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;unlocked&lt;/b&gt; for mixing only</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
+        <translation>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</translation>
+    </message>
+</context>
+<context>
     <name>TrafficGraphWidget</name>
     <message>
-        <location filename="../trafficgraphwidget.cpp" line="+94"/>
+        <location filename="../trafficgraphwidget.cpp" line="+95"/>
         <source>KB/s</source>
         <translation>KB/s</translation>
     </message>
@@ -4542,7 +4547,7 @@ https://www.transifex.com/projects/p/thought/</translation>
 <context>
     <name>TransactionTableModel</name>
     <message>
-        <location filename="../transactiontablemodel.cpp" line="+247"/>
+        <location filename="../transactiontablemodel.cpp" line="+249"/>
         <source>Date</source>
         <translation>Date</translation>
     </message>
@@ -4974,7 +4979,7 @@ https://www.transifex.com/projects/p/thought/</translation>
 <context>
     <name>WalletModel</name>
     <message>
-        <location filename="../walletmodel.cpp" line="+299"/>
+        <location filename="../walletmodel.cpp" line="+301"/>
         <location line="+31"/>
         <location line="+5"/>
         <location line="+11"/>
@@ -4996,7 +5001,7 @@ https://www.transifex.com/projects/p/thought/</translation>
 <context>
     <name>WalletView</name>
     <message>
-        <location filename="../walletview.cpp" line="+50"/>
+        <location filename="../walletview.cpp" line="+51"/>
         <source>&amp;Export</source>
         <translation>&amp;Export</translation>
     </message>
@@ -5011,7 +5016,32 @@ https://www.transifex.com/projects/p/thought/</translation>
         <translation>Selected amount:</translation>
     </message>
     <message>
-        <location line="+240"/>
+        <location line="+243"/>
+        <source>Back up to same filesystem?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>You have chosen a location on the same filesystem as your wallet data directory. &lt;b&gt;If your storage device fails, you will lose both your wallet and your backup, preventing you from accessing your Thought.&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>To avoid this problem, choose a different backup location such as an external hard disk or thumb drive.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Choose new location...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Back up here anyway</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Backup Wallet</source>
         <translation>Backup Wallet</translation>
     </message>
@@ -5021,7 +5051,7 @@ https://www.transifex.com/projects/p/thought/</translation>
         <translation>Wallet Data (*.dat)</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+27"/>
         <source>Backup Failed</source>
         <translation>Backup Failed</translation>
     </message>
@@ -5044,7 +5074,7 @@ https://www.transifex.com/projects/p/thought/</translation>
 <context>
     <name>thought-core</name>
     <message>
-        <location filename="../thoughtstrings.cpp" line="+36"/>
+        <location filename="../thoughtstrings.cpp" line="+37"/>
         <source>Bind to given address and always listen on it. Use [host]:port notation for IPv6</source>
         <translation>Bind to given address and always listen on it. Use [host]:port notation for IPv6</translation>
     </message>
@@ -5054,12 +5084,7 @@ https://www.transifex.com/projects/p/thought/</translation>
         <translation>Error: Listening for incoming connections failed (listen returned error %s)</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>Execute command when a relevant alert is received or we see a really long fork (%s in cmd is replaced by message)</source>
-        <translation>Execute command when a relevant alert is received or we see a really long fork (%s in cmd is replaced by message)</translation>
-    </message>
-    <message>
-        <location line="+6"/>
+        <location line="+8"/>
         <source>Execute command when a wallet transaction changes (%s in cmd is replaced by TxID)</source>
         <translation>Execute command when a wallet transaction changes (%s in cmd is replaced by TxID)</translation>
     </message>
@@ -5089,7 +5114,7 @@ https://www.transifex.com/projects/p/thought/</translation>
         <translation>This is a pre-release test build - use at your own risk - do not use for mining or merchant applications</translation>
     </message>
     <message>
-        <location line="+72"/>
+        <location line="+73"/>
         <source>Warning: The network does not appear to fully agree! Some miners appear to be experiencing issues.</source>
         <translation>Warning: The network does not appear to fully agree! Some miners appear to be experiencing issues.</translation>
     </message>
@@ -5099,7 +5124,7 @@ https://www.transifex.com/projects/p/thought/</translation>
         <translation>Warning: We do not appear to fully agree with our peers! You may need to upgrade, or other nodes may need to upgrade.</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>You must specify a masternodeprivkey in the configuration. Please see documentation for help.</source>
         <translation>You must specify a masternodeprivkey in the configuration. Please see documentation for help.</translation>
     </message>
@@ -5224,7 +5249,7 @@ https://www.transifex.com/projects/p/thought/</translation>
         <translation>Failed to listen on any port. Use -listen=0 if you want this.</translation>
     </message>
     <message>
-        <location line="-401"/>
+        <location line="-403"/>
         <source>(1 = keep tx meta data e.g. account owner and payment request information, 2 = drop tx meta data)</source>
         <translation>(1 = keep tx meta data e.g. account owner and payment request information, 2 = drop tx meta data)</translation>
     </message>
@@ -5339,7 +5364,7 @@ https://www.transifex.com/projects/p/thought/</translation>
         <translation>Overrides minimum spork signers to change spork value. Only useful for regtest and devnet. Using this on mainnet or testnet will ban you.</translation>
     </message>
     <message>
-        <location line="+90"/>
+        <location line="+91"/>
         <source>Use N separate masternodes in parallel to mix funds (%u-%u, default: %u)</source>
         <translation>Use N separate masternodes in parallel to mix funds (%u-%u, default: %u)</translation>
     </message>
@@ -5364,7 +5389,7 @@ https://www.transifex.com/projects/p/thought/</translation>
         <translation>Whitelisted peers cannot be DoS banned and their transactions are always relayed, even if they are already in the mempool, useful e.g. for a gateway</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+12"/>
         <source>You need to rebuild the database using -reindex-chainstate to change -txindex</source>
         <translation>You need to rebuild the database using -reindex-chainstate to change -txindex</translation>
     </message>
@@ -5634,7 +5659,7 @@ https://www.transifex.com/projects/p/thought/</translation>
         <translation>Rebuild chain state from the currently indexed blocks</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+8"/>
         <source>Send trace/debug info to debug.log file (default: %u)</source>
         <translation>Send trace/debug info to debug.log file (default: %u)</translation>
     </message>
@@ -5754,7 +5779,7 @@ https://www.transifex.com/projects/p/thought/</translation>
         <translation>Unable to start HTTP server. See debug log for details.</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Unknown response.</source>
         <translation>Unknown response.</translation>
     </message>
@@ -5854,12 +5879,22 @@ https://www.transifex.com/projects/p/thought/</translation>
         <translation>Keep at most &lt;n&gt; unconnectable transactions in memory (default: %u)</translation>
     </message>
     <message>
-        <location line="-400"/>
+        <location line="-402"/>
         <source>Disable all Thought specific functionality (Masternodes, PrivateSend, InstantSend, Governance) (0-1, default: %u)</source>
         <translation>Disable all Thought specific functionality (Masternodes, PrivateSend, InstantSend, Governance) (0-1, default: %u)</translation>
     </message>
     <message>
-        <location line="-43"/>
+        <location line="-45"/>
+        <source>%s</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Thought Network Ltd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>%s file contains all private keys from this wallet. Do not share it with anyone!</source>
         <translation>%s file contains all private keys from this wallet. Do not share it with anyone!</translation>
     </message>
@@ -5889,7 +5924,12 @@ https://www.transifex.com/projects/p/thought/</translation>
         <translation>Enable use of automated PrivateSend for funds stored in this wallet (0-1, default: %u)</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+10"/>
+        <source>Execute command when a relevant warning is generated (%s in cmd is replaced by message)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>Execute command when a wallet InstantSend transaction is successfully locked (%s in cmd is replaced by TxID)</source>
         <translation>Execute command when a wallet InstantSend transaction is successfully locked (%s in cmd is replaced by TxID)</translation>
     </message>
@@ -5994,7 +6034,12 @@ https://www.transifex.com/projects/p/thought/</translation>
         <translation>The transaction amount is too small to send after the fee has been deducted</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+7"/>
+        <source>This product includes software developed by the OpenSSL Project for use in the OpenSSL Toolkit %s, cryptographic software written by Eric Young, UPnP software written by Thomas Bernard, MIDAS proof-of-work software written by Ray Dillinger, and cuckoo cycle proof-of-work software written by John Tromp.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>Total length of network version string (%i) exceeds maximum length (%i). Reduce the number or size of uacomments.</source>
         <translation>Total length of network version string (%i) exceeds maximum length (%i). Reduce the number or size of uacomments.</translation>
     </message>
@@ -6049,7 +6094,7 @@ https://www.transifex.com/projects/p/thought/</translation>
         <translation>You are starting in lite mode, all Thought-specific functionality is disabled.</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>You need to rebuild the database using -reindex to go back to unpruned mode.  This will redownload the entire blockchain</source>
         <translation>You need to rebuild the database using -reindex to go back to unpruned mode.  This will redownload the entire blockchain</translation>
     </message>
@@ -6379,7 +6424,7 @@ https://www.transifex.com/projects/p/thought/</translation>
         <translation>Pruning blockstore...</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+7"/>
         <source>Rescan the block chain for missing wallet transactions on startup</source>
         <translation>Rescan the block chain for missing wallet transactions on startup</translation>
     </message>
@@ -6429,7 +6474,12 @@ https://www.transifex.com/projects/p/thought/</translation>
         <translation>Unable to bind to %s on this computer. %s is probably already running.</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+3"/>
+        <source>Unknown error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
         <source>Upgrading UTXO database</source>
         <translation>Upgrading UTXO database</translation>
     </message>
@@ -6494,17 +6544,12 @@ https://www.transifex.com/projects/p/thought/</translation>
         <translation>RPC server options:</translation>
     </message>
     <message>
-        <location line="-504"/>
+        <location line="-507"/>
         <source>Thought Core</source>
         <translation>Thought Core</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>The %s developers</source>
-        <translation>The %s developers</translation>
-    </message>
-    <message>
-        <location line="+13"/>
+        <location line="+15"/>
         <source>Accept connections from outside (default: 1 if no -proxy or -connect/-noconnect)</source>
         <translation>Accept connections from outside (default: 1 if no -proxy or -connect/-noconnect)</translation>
     </message>
@@ -6589,12 +6634,7 @@ https://www.transifex.com/projects/p/thought/</translation>
         <translation>This is the transaction fee you may pay when fee estimates are not available.</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>This product includes software developed by the OpenSSL Project for use in the OpenSSL Toolkit %s and cryptographic software written by Eric Young and UPnP software written by Thomas Bernard.</source>
-        <translation>This product includes software developed by the OpenSSL Project for use in the OpenSSL Toolkit %s and cryptographic software written by Eric Young and UPnP software written by Thomas Bernard.</translation>
-    </message>
-    <message>
-        <location line="+15"/>
+        <location line="+18"/>
         <source>Unable to locate enough PrivateSend non-denominated funds for this transaction.</source>
         <translation>Unable to locate enough PrivateSend non-denominated funds for this transaction.</translation>
     </message>
@@ -6644,7 +6684,7 @@ https://www.transifex.com/projects/p/thought/</translation>
         <translation>Whitelist peers connecting from the given IP address (e.g. 1.2.3.4) or CIDR notated network (e.g. 1.2.3.0/24). Can be specified multiple times.</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+20"/>
         <source>%s corrupt, salvage failed</source>
         <translation>%s corrupt, salvage failed</translation>
     </message>
@@ -6760,11 +6800,6 @@ https://www.transifex.com/projects/p/thought/</translation>
     </message>
     <message>
         <location line="+12"/>
-        <source>Receive and display P2P network alerts (default: %u)</source>
-        <translation>Receive and display P2P network alerts (default: %u)</translation>
-    </message>
-    <message>
-        <location line="+1"/>
         <source>Reducing -maxconnections from %d to %d, because of system limitations.</source>
         <translation>Reducing -maxconnections from %d to %d, because of system limitations.</translation>
     </message>
@@ -6919,7 +6954,7 @@ https://www.transifex.com/projects/p/thought/</translation>
         <translation>Unable to sign spork message, wrong key?</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Unknown network specified in -onlynet: &apos;%s&apos;</source>
         <translation>Unknown network specified in -onlynet: &apos;%s&apos;</translation>
     </message>

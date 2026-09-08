@@ -46,7 +46,7 @@
       <key>CFBundleTypeRole</key>
       <string>Editor</string>
       <key>CFBundleURLName</key>
-      <string>org.thought.Thoughtpaymnet</string>
+      <string>org.thought.ThoughtPayment</string>
       <key>CFBundleURLSchemes</key>
       <array>
         <string>thought</string>
@@ -71,7 +71,7 @@
         <string>application/x-thought-payment-request</string>
         <key>public.filename-extension</key>
         <array>
-          <string>Thoughtpaymnetrequest</string>
+          <string>thoughtpaymentrequest</string>
         </array>
       </dict>
     </dict>
