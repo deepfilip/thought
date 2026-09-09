@@ -18,10 +18,6 @@ RUN apt-get update && apt-get install -y \
 # Python stuff
 RUN pip3 install pyzmq # really needed?
 
-# thought_hash
-RUN git clone https://github.com/thoughtnetwork/thought_hash
-RUN cd thought_hash && python3 setup.py install
-
 ARG USER_ID=1000
 ARG GROUP_ID=1000
 
@@ -43,7 +39,7 @@ RUN . /tmp/matrix.sh && \
 RUN \
   update-alternatives --set i686-w64-mingw32-gcc /usr/bin/i686-w64-mingw32-gcc-posix; \
   update-alternatives --set i686-w64-mingw32-g++  /usr/bin/i686-w64-mingw32-g++-posix; \
-  update-alternatives --set x86_64-w64-mingw32-gcc  /usr/bin/x86_64-w64-mingw32-gcc-posix; \
+  update-alternatives --set x86_64-w64-mingw32-gcc /usr/bin/x86_64-w64-mingw32-gcc-posix; \
   update-alternatives --set x86_64-w64-mingw32-g++  /usr/bin/x86_64-w64-mingw32-g++-posix; \
   exit 0
 
