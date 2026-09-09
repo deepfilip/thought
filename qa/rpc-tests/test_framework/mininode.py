@@ -38,7 +38,6 @@ import logging
 import copy
 from test_framework.siphash import siphash256
 
-import thought_hash
 
 BIP0031_VERSION = 60000
 MY_VERSION = 70210  # MIN_PEER_PROTO_VERSION
@@ -74,9 +73,6 @@ def sha256(s):
 
 def hash256(s):
     return sha256(sha256(s))
-
-def thoughthash(s):
-    return thought_hash.getPoWHash(s)
 
 def ser_compact_size(l):
     r = b""
@@ -472,8 +468,8 @@ class CBlockHeader(object):
             r += struct.pack("<I", self.nTime)
             r += struct.pack("<I", self.nBits)
             r += struct.pack("<I", self.nNonce)
-            self.sha256 = uint256_from_str(thoughthash(r))
-            self.hash = encode(thoughthash(r)[::-1], 'hex_codec').decode('ascii')
+            self.sha256 = uint256_from_str(hash256(r))
+            self.hash = encode(hash256(r)[::-1], 'hex_codec').decode('ascii')
 
     def rehash(self):
         self.sha256 = None
@@ -596,7 +592,6 @@ class P2PHeaderAndShortIDs(object):
 
     def __repr__(self):
         return "P2PHeaderAndShortIDs(header=%s, nonce=%d, shortids_length=%d, shortids=%s, prefilled_txn_length=%d, prefilledtxn=%s" % (repr(self.header), self.nonce, self.shortids_length, repr(self.shortids), self.prefilled_txn_length, repr(self.prefilled_txn))
-
 
 # Calculate the BIP 152-compact blocks shortid for a given transaction hash
 def calculate_shortid(k0, k1, tx_hash):
