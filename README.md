@@ -1,26 +1,35 @@
 # Thought Wallet / Thought Core 0.18.4
 
-This repository is a community-maintained fork of [`thoughtnetwork/thought`](https://github.com/thoughtnetwork/thought) used to maintain and publish a macOS Apple Silicon (arm64) community build of Thought Wallet / Thought Core 0.18.4.
+**Community-maintained macOS Apple Silicon (arm64) release of Thought Wallet / Thought Core 0.18.4.**
+
+## Current macOS release
+
+**Latest community release:**  
+[Thought Wallet 0.18.4 — macOS arm64 Community Build R2](https://github.com/deepfilip/thought/releases/tag/v0.18.4-community-r2)
+
+The release provides:
+
+- `Thought-Wallet-0.18.4-macOS-arm64-community-adhoc-r2.dmg` — macOS Apple Silicon application disk image;
+- `SHA256SUMS.txt` — published SHA-256 checksums;
+- `Thought-Wallet-0.18.4-macOS-arm64-community-source-compliance-r2.tar.gz` — source-compliance companion archive.
+
+Verify the downloaded DMG's SHA-256 before opening it.
+
+> **Important:** This is a community-maintained macOS build. It is ad-hoc signed and not Apple-notarized, and it should not be interpreted as an official upstream Thought Network release or as Apple-endorsed software.
+
+## About this repository
+
+This repository is a community-maintained fork of [`thoughtnetwork/thought`](https://github.com/thoughtnetwork/thought) used to maintain and publish the macOS Apple Silicon (arm64) community release of Thought Wallet / Thought Core 0.18.4.
 
 Thought is an experimental peer-to-peer digital currency. The upstream project website is [thought.live](https://thought.live).
 
-## Community macOS release
-
-The current qualified community release line is:
-
-**Thought Wallet 0.18.4 — macOS arm64 Community Build R2**
-
-Release downloads are provided on this repository's [Releases page](https://github.com/deepfilip/thought/releases).
-
-R2 release files:
+## Release checksums
 
 | File | SHA-256 |
 | --- | --- |
 | `Thought-Wallet-0.18.4-macOS-arm64-community-adhoc-r2.dmg` | `2780f3c737907cfc9b71574a6d3e59f3b40050cd172ef45d5ba4da4e6558982c` |
 | `Thought-Wallet-0.18.4-macOS-arm64-community-source-compliance-r2.tar.gz` | `a4bc31fbdb5726497af4a640fc1eeec5376a03166789c2da2e45eeee3ef01363` |
 | `SHA256SUMS.txt` | checksum list for the two files above |
-
-Verify the downloaded DMG's SHA-256 before opening it.
 
 ## macOS security notice
 
