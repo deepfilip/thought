@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Download the current macOS Apple Silicon release
+    url: https://github.com/deepfilip/thought/releases/tag/v0.18.4-community-r2
+    about: Download the current community macOS arm64 build, checksums, and source-compliance companion.
+  - name: Upstream Thought repository
+    url: https://github.com/thoughtnetwork/thought
+    about: Use upstream for issues that are not specific to this community macOS release.

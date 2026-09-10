@@ -1,0 +1,88 @@
+name: macOS bug report
+description: Report a reproducible problem with the community macOS Apple Silicon (arm64) build
+title: "[macOS] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a problem with the community macOS arm64 build.
+
+        **Do not include seed phrases, private keys, wallet passwords, wallet files, authentication tokens, or other secrets.** Review logs before attaching them and remove sensitive wallet/address information when possible.
+
+        Security-sensitive vulnerabilities should follow `SECURITY.md` rather than being disclosed publicly.
+
+  - type: input
+    id: release
+    attributes:
+      label: Release
+      description: Which community release are you using?
+      placeholder: v0.18.4-community-r2
+    validations:
+      required: true
+
+  - type: input
+    id: macos
+    attributes:
+      label: macOS version
+      placeholder: e.g. macOS 15.x
+    validations:
+      required: true
+
+  - type: input
+    id: hardware
+    attributes:
+      label: Mac model / Apple chip
+      placeholder: e.g. MacBook Pro — Apple M2 Pro
+    validations:
+      required: true
+
+  - type: dropdown
+    id: launch_state
+    attributes:
+      label: When does the problem occur?
+      options:
+        - First launch / fresh wallet data
+        - Subsequent / warm launch
+        - Both fresh and warm launches
+        - During installation or Gatekeeper opening
+        - During normal wallet use after startup
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Describe the actual behavior and what you expected instead.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Give the shortest repeatable sequence you know.
+      placeholder: |
+        1. Download ...
+        2. Open ...
+        3. Observe ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant non-sensitive logs or messages
+      description: Optional. Remove secrets and sensitive wallet information before posting.
+      render: shell
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Safety checks
+      options:
+        - label: I have not included a seed phrase, private key, wallet password, wallet file, authentication token, or other secret.
+          required: true
+        - label: I verified that this report concerns the community macOS arm64 build or I have explained why I think it does.
+          required: true
