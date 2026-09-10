@@ -12,7 +12,7 @@ The current qualified community release line is:
 
 Release downloads are provided on this repository's [Releases page](https://github.com/deepfilip/thought/releases).
 
-Expected public release files:
+R2 release files:
 
 | File | SHA-256 |
 | --- | --- |
@@ -36,13 +36,14 @@ Initial wallet setup can take tens of seconds while local wallet data is initial
 
 ## Release source identity
 
-The R2 application and source-compliance package are tied to the qualified source state below:
+R2 is tied to the qualified source state below:
 
+- Release identity: `v0.18.4-community-r2`
 - Qualified release commit: `37e145b72de59db8f60c137a283a2c54b4e16c28`
 - Qualified release tree: `5abba2a31eb0fc5dd0107aa9dc01d7e74a6a4132`
 - Qualified application executable SHA-256: `5d66f7493518e09d097356fc2f0f5311ecb45861ae06eebce7188635dd127c90`
 
-The community R2 release tag is intended to identify that exact qualified commit. Documentation-only commits may exist later on `master`; they do not change the source identity of the tagged R2 application.
+The R2 release tag identifies the exact qualified commit above. Documentation-only commits may exist later on `master`; they do not change the source identity of the tagged R2 application.
 
 The source-compliance companion published with the release contains the frozen Thought source, dependency-source custody, preserved relink material, component/source inventory, checksums, notices, and documented scope limitations.
 
