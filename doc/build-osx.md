@@ -1,3 +1,11 @@
+> **Legacy macOS build notes**
+>
+> This file is inherited from the older Thought Core build documentation and contains x86_64-era assumptions. It is retained for historical/reference value.
+>
+> For the current community fork's Apple Silicon source identity, reproducibility boundary, environment capture and build-attempt guidance, use [`macos-arm64-build.md`](macos-arm64-build.md).
+>
+> Do not treat the commands below as proof of the environment or packaging process used for the published macOS arm64 Community Build R2.
+
 Mac OS X Build Instructions and Notes
 ====================================
 The commands in this guide should be executed in a Terminal application.

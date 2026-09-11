@@ -1,0 +1,107 @@
+name: Build / reproduction report
+description: Report a repeatable source-build or reproduction problem for this community fork
+title: "[build] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for source-build or reproduction problems.
+
+        **Do not include seed phrases, private keys, wallet passwords, wallet files, authentication tokens, or other secrets.** Review logs before attaching them.
+
+        Security-sensitive vulnerabilities should follow `SECURITY.md` instead of being disclosed publicly.
+
+  - type: input
+    id: source_ref
+    attributes:
+      label: Source tag / commit
+      description: Give the exact tag or full commit SHA you attempted to build.
+      placeholder: v0.18.4-community-r2 or a full commit SHA
+    validations:
+      required: true
+
+  - type: input
+    id: source_tree
+    attributes:
+      label: Source tree
+      description: Optional but recommended. Output of `git rev-parse HEAD^{tree}`.
+      placeholder: Full tree SHA
+
+  - type: input
+    id: hardware
+    attributes:
+      label: Hardware / architecture
+      description: Include the Mac model or machine architecture and whether the shell is native or translated.
+      placeholder: Apple M2 Pro, native arm64
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: macOS 15.x
+    validations:
+      required: true
+
+  - type: textarea
+    id: toolchain
+    attributes:
+      label: Toolchain and dependency environment
+      description: Include Xcode / Command Line Tools, clang, make, Python, Homebrew (if used), depends host/prefix and other relevant versions.
+      placeholder: |
+        xcodebuild -version:
+        clang --version:
+        make --version:
+        python3 --version:
+        Homebrew prefix / relevant packages:
+        depends host/prefix:
+    validations:
+      required: true
+
+  - type: textarea
+    id: commands
+    attributes:
+      label: Exact commands
+      description: Paste the shortest command sequence that reproduces the result.
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result
+      description: Include the first deterministic error, unexpected output, or incomplete step. Remove secrets first.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+      description: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: artifacts
+    attributes:
+      label: Produced artifact identity
+      description: Optional. If artifacts were produced, include `file` output, version output and SHA-256 values. Do not upload wallet data or secrets.
+      placeholder: |
+        file src/qt/thought-qt:
+        thought-qt --version:
+        SHA-256:
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Safety and scope checks
+      options:
+        - label: I have not included a seed phrase, private key, wallet password, wallet file, authentication token, or other secret.
+          required: true
+        - label: I have included the exact source ref and enough environment/command detail for another person to attempt the same build.
+          required: true
+        - label: This is a build/reproduction report, not a public disclosure of a security-sensitive vulnerability.
+          required: true
