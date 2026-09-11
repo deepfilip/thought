@@ -36,6 +36,17 @@ This repository is a community-maintained fork of [`thoughtnetwork/thought`](htt
 
 Thought is an experimental peer-to-peer digital currency. The upstream project website is [thought.live](https://thought.live).
 
+## Documentation map
+
+- **Install/build entry point:** [`INSTALL.md`](INSTALL.md)
+- **macOS Apple Silicon build and reproduction:** [`doc/macos-arm64-build.md`](doc/macos-arm64-build.md)
+- **Fast initial sync on macOS:** [`doc/macos-fast-sync.md`](doc/macos-fast-sync.md)
+- **Generic depends-based build flow:** [`doc/build-generic.md`](doc/build-generic.md)
+- **Inherited legacy macOS notes:** [`doc/build-osx.md`](doc/build-osx.md)
+- **Contributor workflow:** [`CONTRIBUTING.md`](CONTRIBUTING.md)
+
+The Apple Silicon guide distinguishes what is verified for the published R2 release from what remains environment-dependent in a fresh source build. The R2 release does **not** claim full historical build reproducibility.
+
 ## Release checksums
 
 | File | SHA-256 |
@@ -58,7 +69,7 @@ Initial wallet setup can take tens of seconds while local wallet data is initial
 
 ## Support and bug reports
 
-For reproducible problems with this **community macOS arm64 build**, use the repository's [macOS bug-report form](https://github.com/deepfilip/thought/issues/new?template=bug_report.yml).
+For reproducible problems with this **community macOS arm64 build**, use the repository's [macOS bug-report form](https://github.com/deepfilip/thought/issues/new?template=bug_report.yml). For source-build or reproduction problems, use the [build/reproduction form](https://github.com/deepfilip/thought/issues/new?template=build_reproduction.yml).
 
 Before posting, remove sensitive information. **Never publish a seed phrase, private key, wallet password, wallet file, authentication token, or other secret.** For security-sensitive vulnerabilities, follow [`SECURITY.md`](SECURITY.md) instead of posting exploit details publicly.
 
@@ -79,9 +90,9 @@ The source-compliance companion published with the release contains the frozen T
 
 ## Building from source
 
-See [`INSTALL.md`](INSTALL.md) and the platform-specific files under [`doc/`](doc/) for source-build guidance.
+Start with [`INSTALL.md`](INSTALL.md). For the community fork's Apple Silicon-specific source identity, limitations, environment capture, build-path and comparison guidance, see [`doc/macos-arm64-build.md`](doc/macos-arm64-build.md).
 
-The build system and historical dependency stack are inherited from the upstream Thought Core codebase. Platform-specific work in this fork should be reviewed against the exact source revision being built.
+The build system and historical dependency stack are inherited from the upstream Thought Core codebase. The generic depends documentation does not by itself establish a validated native macOS arm64 recipe, and the published R2 release does not claim full historical build reproducibility. Always record the exact source revision and build environment when reporting results.
 
 ## Development and contributions
 

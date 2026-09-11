@@ -1,3 +1,23 @@
+# Contributing to this community-maintained fork
+
+This repository is a community-maintained fork used for the macOS Apple Silicon (arm64) Community Build of Thought Wallet / Thought Core 0.18.4. It is not the upstream `thoughtnetwork/thought` repository, and fork-specific release or maintenance statements here should not be read as upstream Thought Network policy.
+
+For changes to this fork:
+
+- work on a topic branch and submit a pull request rather than changing `master` directly;
+- keep documentation-only changes separate from source or executable-behavior changes where practical;
+- use [`INSTALL.md`](INSTALL.md) and [`doc/macos-arm64-build.md`](doc/macos-arm64-build.md) for the current fork-specific build/reproduction entry points;
+- use the [build/reproduction issue form](https://github.com/deepfilip/thought/issues/new?template=build_reproduction.yml) for repeatable source-build/reproduction problems;
+- use the [macOS bug-report form](https://github.com/deepfilip/thought/issues/new?template=bug_report.yml) for runtime problems with the published community macOS arm64 build;
+- follow [`SECURITY.md`](SECURITY.md) for security-sensitive vulnerabilities instead of posting exploit details publicly;
+- never publish seed phrases, private keys, wallet passwords, wallet files, authentication tokens or other secrets.
+
+The published R2 application has a fixed tagged source identity (`v0.18.4-community-r2`). Later documentation-only commits on `master` do not change that tagged application or its release assets.
+
+The contributor text below is inherited from the historical Thought Core repository. References to project maintainers, project leadership and release policy describe that inherited workflow and should not be assumed to define upstream authority or current fork governance beyond what this repository explicitly establishes.
+
+---
+
 Contributing to Thought Core
 ============================
 
