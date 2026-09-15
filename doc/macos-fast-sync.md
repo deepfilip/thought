@@ -1,6 +1,8 @@
 # Fast initial blockchain sync on macOS
 
-This guide is for users of the **Thought Wallet 0.18.4 macOS Apple Silicon (arm64) Community Build R2** who want to avoid downloading the entire historical blockchain from peers from scratch.
+This guide is for users of the **Thought Wallet 0.18.4 macOS Apple Silicon (arm64) community release** who want to avoid downloading the entire historical blockchain from peers from scratch.
+
+The current application release is **Community Build R3**. The external snapshot compatibility evidence documented below was obtained with **Community Build R2 on 10 September 2026**; that historical R2 test remains the exact evidence basis for this guide and should not be silently represented as an R3-specific requalification.
 
 Fast sync is **optional**. Thought Wallet can synchronize normally from the peer-to-peer network without using a snapshot.
 
@@ -25,11 +27,11 @@ The snapshot page says new archives are posted approximately monthly. **Check th
 
 Although the upstream Quickstart instructions are written for Linux, the blockchain database contents are not a Linux application binary. On **10 September 2026**, the 06 June 2026 snapshot was tested with Community Build R2 on macOS Apple Silicon: R2 opened the snapshot successfully and then caught up from the snapshot state to the live Thought network.
 
-That test establishes compatibility with the snapshot tested on that date. It does not automatically authenticate or qualify future replacement archives.
+That test establishes compatibility with the snapshot tested on that date for R2. It does not automatically authenticate or qualify future replacement archives, and it does not constitute a separate R3 snapshot-compatibility test.
 
 ## Trust and safety notes
 
-The snapshot is **not hosted by this GitHub repository and is not part of the R2 release assets**. It is a maintainer-hosted convenience download linked from Phil's Thought Quickstart Guide.
+The snapshot is **not hosted by this GitHub repository and is not part of the R3 release assets**. It is a maintainer-hosted convenience download linked from Phil's Thought Quickstart Guide.
 
 At the time of the macOS compatibility test, the snapshot source page did not publish a cryptographic checksum for the archive. Because the snapshot contains prebuilt `chainstate` and `evodb` database state rather than only raw blocks, users should treat it as a convenience/trust trade-off rather than as equivalent to synchronizing everything from peers from scratch.
 
@@ -43,15 +45,17 @@ Before modifying an existing Thought data directory:
 
 If the wallet contains meaningful funds and you are unsure about any step, stop and ask for help before changing the data directory.
 
-## 1. Install Community Build R2
+## 1. Install Community Build R3
 
-Download the current macOS Apple Silicon DMG from the repository's [R2 release](https://github.com/deepfilip/thought/releases/tag/v0.18.4-community-r2).
+Download the current macOS Apple Silicon DMG from the repository's [R3 release](https://github.com/deepfilip/thought/releases/tag/v0.18.4-community-r3).
 
 Verify the DMG SHA-256 before opening it:
 
-`2780f3c737907cfc9b71574a6d3e59f3b40050cd172ef45d5ba4da4e6558982c`
+`656a8b69dc7bff05b6d93e799fc4daf49b2f74f7123a8ca2a8e42c779e7d6f4d`
 
 Open the DMG and drag `Thought-Qt.app` onto the **Applications** shortcut inside the DMG window. After the copy completes, launch the installed application from `/Applications`.
+
+If you choose to use the external snapshot with R3, preserve the rollback precautions below and remember that the exact snapshot test recorded by this repository was performed with R2, not R3.
 
 ## 2. Identify the active Thought data directory
 
@@ -141,8 +145,8 @@ If your custom data directory is on removable storage, macOS privacy controls ma
 
 Quit the wallet and restore the preserved old `blocks`, `chainstate`, and `evodb` directories. Your backed-up `wallet.dat` should remain untouched.
 
-For reproducible problems specific to Community Build R2, use the repository's [macOS bug-report form](https://github.com/deepfilip/thought/issues/new?template=bug_report.yml). Never attach `wallet.dat` or disclose private keys, seeds, or wallet passwords.
+For reproducible problems specific to the current community release, use the repository's [macOS bug-report form](https://github.com/deepfilip/thought/issues/new?template=bug_report.yml). Never attach `wallet.dat` or disclose private keys, seeds, or wallet passwords.
 
-## Why this is separate from the R2 release
+## Why this is separate from the application release
 
-Community Build R2 remains a normal Thought Wallet application release. The snapshot is an optional onboarding accelerator maintained outside this repository and can be updated independently of the application. Keeping the two separate avoids silently bundling mutable blockchain state into the signed/qualified application package.
+Community Build R3 remains a normal Thought Wallet application release. The snapshot is an optional onboarding accelerator maintained outside this repository and can be updated independently of the application. Keeping the two separate avoids silently bundling mutable blockchain state into the qualified application package.

@@ -16,7 +16,7 @@ body:
     attributes:
       label: Release
       description: Which community release are you using?
-      placeholder: v0.18.4-community-r2
+      placeholder: v0.18.4-community-r3
     validations:
       required: true
 

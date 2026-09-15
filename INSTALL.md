@@ -16,25 +16,25 @@ The legacy macOS guide is retained for historical context. It includes older Hom
 
 ## Start from an immutable source identity
 
-If you are comparing a source build with the published macOS arm64 Community Build R2, use the release tag rather than a moving branch:
+If you are comparing a source build with the published macOS arm64 Community Build R3, use the release tag rather than a moving branch:
 
 ```bash
 git fetch --tags
-git checkout --detach v0.18.4-community-r2
+git checkout --detach v0.18.4-community-r3
 git rev-parse HEAD
 git rev-parse HEAD^{tree}
 ```
 
-For R2, the published source identity is:
+For R3, the published source identity is:
 
-- commit `37e145b72de59db8f60c137a283a2c54b4e16c28`
-- tree `5abba2a31eb0fc5dd0107aa9dc01d7e74a6a4132`
+- commit `a80c089edf82f4ccd76af2102e0af9d0daa7a261`
+- tree `0d9c8ee25b8625af6c59b9558e083b86380ab72d`
 
-Later documentation-only commits on `master` do not change the tagged R2 application source identity.
+Later documentation-only commits on `master` do not change the tagged R3 application source identity.
 
 ## Reproducibility boundary
 
-The R2 release is an ad-hoc-signed, non-notarized community build and does **not** claim full historical build reproducibility. The release's source-compliance companion preserves source/dependency custody, relink material and documented limitations, but a fresh build on another machine may differ because of toolchain, SDK, dependency, environment or packaging differences.
+The R3 release is an ad-hoc-signed, non-notarized community build and does **not** claim full historical build reproducibility. The release's source-compliance companion preserves source/dependency custody, relink material and documented limitations, but a fresh build on another machine may differ because of toolchain, SDK, dependency, environment or packaging differences.
 
 Do not treat a different build hash by itself as proof of a defect or compromise.
 

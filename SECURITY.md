@@ -6,7 +6,7 @@ This repository maintains a **community macOS Apple Silicon (arm64) build** of T
 
 The currently supported community release is:
 
-- `v0.18.4-community-r2`
+- `v0.18.4-community-r3`
 
 Security reports should identify the exact release/tag and macOS version involved whenever possible.
 

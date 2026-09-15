@@ -2,35 +2,35 @@
 
 This guide is the fork-specific entry point for building or attempting to reproduce Thought Wallet / Thought Core 0.18.4 on macOS Apple Silicon.
 
-It is deliberately conservative: it separates **verified R2 release identity** from **environment-dependent source-build steps** and does not claim that the repository currently provides a one-command, byte-for-byte reproducible native arm64 build.
+It is deliberately conservative: it separates **verified R3 release identity** from **environment-dependent source-build steps** and does not claim that the repository currently provides a one-command, byte-for-byte reproducible native arm64 build.
 
-## 1. What is verified for Community Build R2
+## 1. What is verified for Community Build R3
 
 The published release is:
 
-- tag: `v0.18.4-community-r2`
-- qualified repository commit: `37e145b72de59db8f60c137a283a2c54b4e16c28`
-- qualified repository tree: `5abba2a31eb0fc5dd0107aa9dc01d7e74a6a4132`
-- qualified application executable SHA-256: `5d66f7493518e09d097356fc2f0f5311ecb45861ae06eebce7188635dd127c90`
-- DMG: `Thought-Wallet-0.18.4-macOS-arm64-community-adhoc-r2.dmg`
-- DMG SHA-256: `2780f3c737907cfc9b71574a6d3e59f3b40050cd172ef45d5ba4da4e6558982c`
+- tag: `v0.18.4-community-r3`
+- qualified repository commit: `a80c089edf82f4ccd76af2102e0af9d0daa7a261`
+- qualified repository tree: `0d9c8ee25b8625af6c59b9558e083b86380ab72d`
+- qualified signed application executable SHA-256: `981ffc32676b919be4d81ea1744c477e26740426c33ad28de660bc3d161a972e`
+- DMG: `Thought-Wallet-0.18.4-macOS-arm64-community-adhoc-r3.dmg`
+- DMG SHA-256: `656a8b69dc7bff05b6d93e799fc4daf49b2f74f7123a8ca2a8e42c779e7d6f4d`
 
 The release is **ad-hoc signed and not Apple-notarized**. Its release notes explicitly do **not** claim full historical build reproducibility.
 
-If your goal is to compare with R2, start from the tag rather than `master`:
+If your goal is to compare with R3, start from the tag rather than `master`:
 
 ```bash
 git fetch --tags
-git checkout --detach v0.18.4-community-r2
+git checkout --detach v0.18.4-community-r3
 git rev-parse HEAD
 git rev-parse HEAD^{tree}
 ```
 
-Expected R2 values:
+Expected R3 values:
 
 ```text
-37e145b72de59db8f60c137a283a2c54b4e16c28
-5abba2a31eb0fc5dd0107aa9dc01d7e74a6a4132
+a80c089edf82f4ccd76af2102e0af9d0daa7a261
+0d9c8ee25b8625af6c59b9558e083b86380ab72d
 ```
 
 ## 2. Record the build environment first
@@ -66,7 +66,7 @@ Thought Core's generic build path uses the repository's [`depends`](../depends/R
 
 The inherited depends documentation lists `x86_64-apple-darwin11` as a macOS host triplet. That is an **x86_64** target and must not be presented as a validated native Apple Silicon recipe.
 
-The older [`build-osx.md`](build-osx.md) is preserved for historical context. It also contains x86_64-era assumptions. Use it as legacy reference, not as proof of the R2 build environment.
+The older [`build-osx.md`](build-osx.md) is preserved for historical context. It also contains x86_64-era assumptions. Use it as legacy reference, not as proof of the R3 build environment.
 
 ## 4. Dependency/build attempt
 
@@ -96,7 +96,7 @@ For additional configure options:
 ./configure --help
 ```
 
-If the native depends route fails before producing a usable prefix, stop there and capture the first reproducible failure. Do not paper over the failure by silently mixing unrelated Homebrew/system libraries and then call the result a reproduction of R2.
+If the native depends route fails before producing a usable prefix, stop there and capture the first reproducible failure. Do not paper over the failure by silently mixing unrelated Homebrew/system libraries and then call the result a reproduction of R3.
 
 ## 5. Inspect a successful build
 
@@ -113,13 +113,13 @@ shasum -a 256 src/qt/thought-qt
 
 If a listed artifact was not built, report that fact rather than changing the claim.
 
-A different SHA-256 from the qualified R2 executable does **not** by itself prove a defect: the published R2 release does not claim full historical build reproducibility, and compiler/SDK/dependency/packaging differences can change output bytes.
+A different SHA-256 from the qualified R3 executable does **not** by itself prove a defect: the published R3 release does not claim full historical build reproducibility, and compiler/SDK/dependency/packaging differences can change output bytes.
 
 ## 6. Packaging is a separate question
 
-This guide does not claim that the legacy `make deploy` path reproduces the published R2 DMG, nor does it define Developer ID signing or notarization.
+This guide does not claim that the legacy `make deploy` path reproduces the published R3 DMG, nor does it define Developer ID signing or notarization.
 
-The published R2 package is ad-hoc signed and non-notarized. Do not describe a locally produced package as the R2 release unless it is the exact published release artifact with the published checksum.
+The published R3 package is ad-hoc signed and non-notarized. Do not describe a locally produced package as the R3 release unless it is the exact published release artifact with the published checksum.
 
 ## 7. Reporting a failed or partial reproduction
 
