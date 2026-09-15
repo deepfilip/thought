@@ -16,7 +16,7 @@ body:
     attributes:
       label: Source tag / commit
       description: Give the exact tag or full commit SHA you attempted to build.
-      placeholder: v0.18.4-community-r2 or a full commit SHA
+      placeholder: v0.18.4-community-r3 or a full commit SHA
     validations:
       required: true
 
