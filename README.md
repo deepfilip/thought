@@ -4,29 +4,27 @@
 
 **Looking for the Mac version? This fork contains the macOS-specific maintenance, release hardening, and packaging work used to provide a working Apple Silicon (arm64) community build of Thought Wallet / Thought Core 0.18.4.**
 
-[![Download for macOS Apple Silicon](https://img.shields.io/badge/Download_for_macOS-Apple_Silicon_arm64-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/deepfilip/thought/releases/download/v0.18.4-community-r2/Thought-Wallet-0.18.4-macOS-arm64-community-adhoc-r2.dmg)
+[![Download for macOS Apple Silicon](https://img.shields.io/badge/Download_for_macOS-Apple_Silicon_arm64-000000?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/deepfilip/thought/releases/download/v0.18.4-community-r3/Thought-Wallet-0.18.4-macOS-arm64-community-adhoc-r3.dmg)
 
-**Current release:** [Thought Wallet 0.18.4 — macOS arm64 Community Build R2](https://github.com/deepfilip/thought/releases/tag/v0.18.4-community-r2)  
-**Direct DMG:** [`Thought-Wallet-0.18.4-macOS-arm64-community-adhoc-r2.dmg`](https://github.com/deepfilip/thought/releases/download/v0.18.4-community-r2/Thought-Wallet-0.18.4-macOS-arm64-community-adhoc-r2.dmg)  
-**DMG SHA-256:** `2780f3c737907cfc9b71574a6d3e59f3b40050cd172ef45d5ba4da4e6558982c`
+**Current release:** [Thought Wallet 0.18.4 — macOS arm64 Community Build R3](https://github.com/deepfilip/thought/releases/tag/v0.18.4-community-r3)  
+**Direct DMG:** [`Thought-Wallet-0.18.4-macOS-arm64-community-adhoc-r3.dmg`](https://github.com/deepfilip/thought/releases/download/v0.18.4-community-r3/Thought-Wallet-0.18.4-macOS-arm64-community-adhoc-r3.dmg)  
+**DMG SHA-256:** `656a8b69dc7bff05b6d93e799fc4daf49b2f74f7123a8ca2a8e42c779e7d6f4d`
 
 > **Important:** This is a community-maintained macOS build. It is ad-hoc signed and not Apple-notarized, and it should not be interpreted as an official upstream Thought Network release or as Apple-endorsed software.
 
 ## ⚡ Fast initial blockchain sync
 
-A brand-new wallet may otherwise need to synchronize years of Thought blockchain history from peers. Community Build R2 has been successfully tested on macOS Apple Silicon with the maintainer-hosted Thought chain snapshot, reducing the starting point to a much more recent chain state before normal peer-to-peer catch-up.
+A brand-new wallet may otherwise need to synchronize years of Thought blockchain history from peers. The optional [fast-sync guide](doc/macos-fast-sync.md) documents a maintainer-hosted Thought chain snapshot and the associated trust/rollback precautions.
 
-**[→ Fast initial sync on macOS — safe snapshot guide](doc/macos-fast-sync.md)**
-
-The guide covers the default macOS data directory, remembered custom data directories, wallet backup, snapshot provenance/trust limitations, and safe rollback. The snapshot is optional and is **not bundled with the R2 application or release assets**.
+The exact macOS snapshot compatibility test recorded by this repository was performed with Community Build R2 on 10 September 2026. R3 is the current application release; that R2 test remains historical evidence and is not represented as a separate R3 snapshot-compatibility requalification.
 
 ## What this Mac release contains
 
 The current community release provides:
 
-- `Thought-Wallet-0.18.4-macOS-arm64-community-adhoc-r2.dmg` — the macOS Apple Silicon application disk image;
+- `Thought-Wallet-0.18.4-macOS-arm64-community-adhoc-r3.dmg` — the macOS Apple Silicon application disk image;
 - `SHA256SUMS.txt` — published SHA-256 checksums;
-- `Thought-Wallet-0.18.4-macOS-arm64-community-source-compliance-r2.tar.gz` — the source-compliance companion archive.
+- `Thought-Wallet-0.18.4-macOS-arm64-community-source-compliance-r3.tar.gz` — the source-compliance companion archive.
 
 Verify the downloaded DMG's SHA-256 before opening it.
 
@@ -45,15 +43,15 @@ Thought is an experimental peer-to-peer digital currency. The upstream project w
 - **Inherited legacy macOS notes:** [`doc/build-osx.md`](doc/build-osx.md)
 - **Contributor workflow:** [`CONTRIBUTING.md`](CONTRIBUTING.md)
 
-The Apple Silicon guide distinguishes what is verified for the published R2 release from what remains environment-dependent in a fresh source build. The R2 release does **not** claim full historical build reproducibility.
+The Apple Silicon guide distinguishes what is verified for the published R3 release from what remains environment-dependent in a fresh source build. The R3 release does **not** claim full historical build reproducibility.
 
 ## Release checksums
 
 | File | SHA-256 |
 | --- | --- |
-| `Thought-Wallet-0.18.4-macOS-arm64-community-adhoc-r2.dmg` | `2780f3c737907cfc9b71574a6d3e59f3b40050cd172ef45d5ba4da4e6558982c` |
-| `Thought-Wallet-0.18.4-macOS-arm64-community-source-compliance-r2.tar.gz` | `a4bc31fbdb5726497af4a640fc1eeec5376a03166789c2da2e45eeee3ef01363` |
-| `SHA256SUMS.txt` | checksum list for the two files above |
+| `Thought-Wallet-0.18.4-macOS-arm64-community-adhoc-r3.dmg` | `656a8b69dc7bff05b6d93e799fc4daf49b2f74f7123a8ca2a8e42c779e7d6f4d` |
+| `Thought-Wallet-0.18.4-macOS-arm64-community-source-compliance-r3.tar.gz` | `298d4df93e8fab297f29a231f36f418b56c9c955d7080718f92ca11a6f0cbc9c` |
+| `SHA256SUMS.txt` | `89f591b92e6d3756380376513c89650e0fc38fa09d6ecbbed8fe2fd448ec1cce` |
 
 ## macOS security notice
 
@@ -63,9 +61,11 @@ Because of that distribution model, macOS may block the first launch and report 
 
 Do **not** disable Gatekeeper globally.
 
+The exact R3 qualification path was same-host and did not carry a quarantine attribute, so a fresh downloaded-file Gatekeeper first-open path was not independently re-proven for R3. See the R3 release limitations for the exact scope.
+
 ## First launch
 
-Initial wallet setup can take tens of seconds while local wallet data is initialized. Subsequent launches should be substantially faster.
+The R3 functional launch qualification used bounded disposable REGTEST controls. Default fresh-wallet first-launch performance was not adjudicated by that test and should not be inferred from it.
 
 ## Support and bug reports
 
@@ -77,14 +77,14 @@ Issues that are not specific to this community macOS release may belong with the
 
 ## Release source identity
 
-R2 is tied to the qualified source state below:
+R3 is tied to the qualified source state below:
 
-- Release identity: `v0.18.4-community-r2`
-- Qualified release commit: `37e145b72de59db8f60c137a283a2c54b4e16c28`
-- Qualified release tree: `5abba2a31eb0fc5dd0107aa9dc01d7e74a6a4132`
-- Qualified application executable SHA-256: `5d66f7493518e09d097356fc2f0f5311ecb45861ae06eebce7188635dd127c90`
+- Release identity: `v0.18.4-community-r3`
+- Qualified release commit: `a80c089edf82f4ccd76af2102e0af9d0daa7a261`
+- Qualified release tree: `0d9c8ee25b8625af6c59b9558e083b86380ab72d`
+- Qualified signed application executable SHA-256: `981ffc32676b919be4d81ea1744c477e26740426c33ad28de660bc3d161a972e`
 
-The R2 release tag identifies the exact qualified commit above. Documentation-only commits may exist later on `master`; they do not change the source identity of the tagged R2 application.
+The R3 release tag identifies the exact qualified commit above. Documentation-only commits may exist later on `master`; they do not change the source identity of the tagged R3 application.
 
 The source-compliance companion published with the release contains the frozen Thought source, dependency-source custody, preserved relink material, component/source inventory, checksums, notices, and documented scope limitations.
 
@@ -92,7 +92,7 @@ The source-compliance companion published with the release contains the frozen T
 
 Start with [`INSTALL.md`](INSTALL.md). For the community fork's Apple Silicon-specific source identity, limitations, environment capture, build-path and comparison guidance, see [`doc/macos-arm64-build.md`](doc/macos-arm64-build.md).
 
-The build system and historical dependency stack are inherited from the upstream Thought Core codebase. The generic depends documentation does not by itself establish a validated native macOS arm64 recipe, and the published R2 release does not claim full historical build reproducibility. Always record the exact source revision and build environment when reporting results.
+The build system and historical dependency stack are inherited from the upstream Thought Core codebase. The generic depends documentation does not by itself establish a validated native macOS arm64 recipe, and the published R3 release does not claim full historical build reproducibility. Always record the exact source revision and build environment when reporting results.
 
 ## Development and contributions
 
